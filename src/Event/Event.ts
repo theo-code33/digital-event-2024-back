@@ -1,12 +1,12 @@
-import { Event as EventType } from "../types/event.types";
-import * as easymidi from "easymidi";
+import { EventType } from "../types/event.types";
+import easymidi from "easymidi";
 import { network } from "../utils/const";
 export class Event {
   private output: easymidi.Output;
 
   constructor(
-    public channel: string,
-    public event: EventType,
+    public channel: number,
+    public eventType: EventType,
     public note: string,
     public velocity: string
   ) {
@@ -15,7 +15,7 @@ export class Event {
 
   public sendMidi(): void {
     const payload =
-      this.event === "cc"
+      this.eventType === "cc"
         ? {
             controller: this.note,
             value: this.velocity,
@@ -26,6 +26,10 @@ export class Event {
             velocity: this.velocity,
             channel: this.channel,
           };
-    this.output.send(this.event as any, payload as any);
+    this.output.send(this.eventType as any, payload as any);
+  }
+
+  public init(): void {
+    console.log("init");
   }
 }

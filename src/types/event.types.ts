@@ -1,1 +1,1 @@
-export type Event = "noteon" | "cc";
+export type EventType = "noteon" | "cc";

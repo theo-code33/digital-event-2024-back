@@ -1,1 +1,3 @@
-export let bpm: number = 120;
+import Tempo from "../Tempo";
+
+export const currentBpm: Tempo = new Tempo(120);
