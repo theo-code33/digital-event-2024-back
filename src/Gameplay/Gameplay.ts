@@ -29,6 +29,7 @@ export class Gameplay {
       if (
           inputArray[this.deviceSlot] != this.initialBtnValue && !isClicking
       ) {
+        console.log(inputArray[this.deviceSlot], this.combinationPlayer, this.level);
         this.gameArray.push(inputArray[this.deviceSlot]);
         const game: boolean | undefined = this.checkCombinationPlayer();
         game ? this.level++ : null;
@@ -50,10 +51,11 @@ export class Gameplay {
     for (let i: number = 0; i < this.gameArray.length; i++) {
       if (this.gameArray[i] != this.combinationPlayer[i]) {
         this.gameArray.length = 0;
-        console.log("BEURRE !");
+        console.log("error !");
         return false;
       } else {
         if (i === this.combinationPlayer.length - 1) {
+          console.log("success !")
           const newPossibility =
               this.possibilityPlayer[
                   Math.floor(Math.random() * this.possibilityPlayer.length)

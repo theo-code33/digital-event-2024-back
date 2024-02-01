@@ -1,9 +1,9 @@
 export class Tempo {
-  constructor(public bpm: string) {}
-  public getBpm(): string {
+  constructor(public bpm: number) {}
+  public getBpm(): number {
     return this.bpm;
   }
-  public setBpm(bpm: string): void {
+  public setBpm(bpm: number): void {
     this.bpm = bpm;
   }
 }

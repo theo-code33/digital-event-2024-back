@@ -1,5 +1,5 @@
 import { Event as EventType } from "../types/event.types";
-import easymidi from "easymidi";
+import * as easymidi from "easymidi";
 import { network } from "../utils/const";
 export class Event {
   private output: easymidi.Output;
@@ -27,9 +27,5 @@ export class Event {
             channel: this.channel,
           };
     this.output.send(this.event as any, payload as any);
-  }
-
-  public init(): void {
-    console.log("init");
   }
 }
