@@ -10,6 +10,4 @@ export class Logic extends Event {
   ) {
     super(channel, eventType, note, velocity);
   }
-
-
 }
