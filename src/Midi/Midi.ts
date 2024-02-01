@@ -21,7 +21,7 @@ export class Midi extends Tempo {
         const deltaTime = lastNote - noteBeforeLastNote;
 
         currentTempo.setBpm(60000 / deltaTime * 4);
-        currentTempo.setLoopLength(deltaTime * 16);
+        currentTempo.setLoopLength(deltaTime * 15);
 
         console.log(currentTempo.getBpm(), currentTempo.getLoopLength());
       }

@@ -9,8 +9,11 @@ class Tempo {
     getBpm() {
         return this.bpm;
     }
-    midiGateway() {
-        console.log();
+    midiGateway(callback) {
+        setInterval(() => {
+            callback();
+            console.log(this.loopLength);
+        }, this.loopLength);
     }
     setBpm(bpm) {
         this.bpm = bpm;

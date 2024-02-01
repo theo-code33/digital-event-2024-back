@@ -1,4 +1,5 @@
 import easymidi from "easymidi";
+import {promises} from "node:dns";
 
 export class Tempo {
   constructor(public bpm: number, public loopLength: number) {}
@@ -6,8 +7,11 @@ export class Tempo {
     return this.bpm;
   }
 
-  public midiGateway(): void {
-    console.log()
+  public midiGateway(callback: () => void) {
+    setInterval(() => {
+      callback();
+      console.log(this.loopLength)
+    }, this.loopLength);
   }
   public setBpm(bpm: number): void {
     this.bpm = bpm;

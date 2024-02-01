@@ -1,6 +1,7 @@
 import { Gameplay } from "./Gameplay";
 import displayConnectedDevices from "./utils/DisplayConnectedDevices";
 import GameplayEvent from "./GameplayEvent";
+import {currentTempo} from "../index";
 export default class CurrentGame {
     public player1: any;
     public player2: any;
@@ -20,7 +21,11 @@ export default class CurrentGame {
         this.totalScore = this.player1.level + this.player2.level
         this.player1Domination = Math.round((this.player1.level / this.totalScore) * 100)
 
-        console.log(this.player1Domination)
+        const test = () => {
+            console.log("function shipped !")
+        }
+
+        currentTempo.midiGateway(test)
 
         new GameplayEvent(this.player1Domination).sendEvent()
     }
