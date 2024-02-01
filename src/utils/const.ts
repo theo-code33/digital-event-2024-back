@@ -1,1 +1,1 @@
-export const network: string = "Réseau leo-theo";
+export const network: string = "Réseau leo";

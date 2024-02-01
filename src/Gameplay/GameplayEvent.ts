@@ -1,22 +1,46 @@
 import Logic from "../Logic";
 export default class GameplayEvent{
-    private readonly level: number;
-    constructor(level: number){
-        this.level = level
+    private readonly player1Domination: number;
+    constructor(player1Domination: number){
+        this.player1Domination = player1Domination
     }
     public sendEvent(): void {
-       switch (this.level) {
-           case 1:
-                new Logic(1, "noteon", "1", "1")
-                break
-           case 2:
-               console.log("level 2")
-               break
-           case 3:
-               console.log("level 3")
-               break
-           default:
-               break;
-       }
+        switch (this.player1Domination) {
+            case 0:
+
+                break;
+            case 10:
+
+                break;
+            case 20:
+
+                break;
+            case 30:
+
+                break;
+            case 40:
+
+                break;
+            case 50:
+
+                break;
+            case 60:
+
+                break;
+            case 70:
+
+                break;
+            case 80:
+
+                break;
+            case 90:
+
+                break;
+            case 100:
+
+                break;
+            default:
+                break;
+        }
     }
 }

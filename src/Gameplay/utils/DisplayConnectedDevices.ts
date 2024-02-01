@@ -6,8 +6,8 @@ const displayConnectedDevices = () => {
         const devicePaths = devices.filter((device) =>
             device.manufacturer && device.manufacturer.includes("DragonRise")
         );
-
         if (devicePaths.length > 0) {
+
             return devicePaths;
         } else {
             console.log("No DragonRise devices found");
