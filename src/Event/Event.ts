@@ -28,4 +28,8 @@ export class Event {
           };
     this.output.send(this.event as any, payload as any);
   }
+
+  public init(): void {
+    console.log("init");
+  }
 }
