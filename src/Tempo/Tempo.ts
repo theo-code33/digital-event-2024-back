@@ -10,7 +10,6 @@ export class Tempo {
   public midiGateway(callback: () => void) {
     setInterval(() => {
       callback();
-      console.log(this.loopLength)
     }, this.loopLength);
   }
   public setBpm(bpm: number): void {

@@ -12,7 +12,6 @@ class Tempo {
     midiGateway(callback) {
         setInterval(() => {
             callback();
-            console.log(this.loopLength);
         }, this.loopLength);
     }
     setBpm(bpm) {
