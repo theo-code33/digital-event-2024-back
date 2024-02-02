@@ -18,10 +18,7 @@ export default class CurrentGame {
     }
 
     checkScore() {
-        this.totalScore = this.player1.level + this.player2.level
-        this.player1Domination = Math.round((this.player1.level / this.totalScore) * 100)
-
-        new GameplayEvent(this.player1Domination).sendEvent()
+        new GameplayEvent(this.player1.level, this.player2.level).sendEvent()
     }
 
     stopGame() {

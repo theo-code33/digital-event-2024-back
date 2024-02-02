@@ -2,6 +2,7 @@ import * as HID from 'node-hid';
 import initialCombination from "./utils/InitialCombination";
 import GameplayEvent from "./GameplayEvent";
 import CurrentGame from "./CurrentGame";
+import {gameLength} from "../utils/const";
 
 let currentGame: any;
 export class Gameplay {
@@ -77,7 +78,7 @@ export class Gameplay {
   endGame(): void {
     setTimeout(() => {
       currentGame.stopGame();
-    }, 180000);
+    }, gameLength);
   }
 }
 

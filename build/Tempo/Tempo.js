@@ -3,12 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Tempo = void 0;
 const node_timers_1 = require("node:timers");
 const index_1 = require("../index");
+const const_1 = require("../utils/const");
 class Tempo {
     constructor(bpm, loopLength) {
         this.bpm = bpm;
         this.loopLength = loopLength;
         this.intervalId = null;
         this.currentMesure = 1;
+        this.loopIndex = 0;
+        this.moduloLoops = 0;
+        this.currentChan = 0;
     }
     getBpm() {
         return this.bpm;
@@ -30,10 +34,36 @@ class Tempo {
         return this.loopLength;
     }
     setCurrentMesure(mesure) {
-        this.currentMesure = mesure == 17 ? 1 : mesure;
+        if (mesure === 13) {
+            this.currentMesure = 1;
+            index_1.currentTempo.setLoopIndex();
+        }
+        else {
+            this.currentMesure = mesure;
+        }
     }
     getCurrentMesure() {
         return this.currentMesure;
+    }
+    setLoopIndex() {
+        this.loopIndex++;
+        switch (this.loopIndex) {
+            case 2:
+                this.currentChan += 1;
+                break;
+            case 4:
+                this.currentChan++;
+                break;
+            case 6:
+                this.currentChan++;
+                break;
+            default:
+                break;
+        }
+    }
+    setModuloLoops() {
+        this.moduloLoops = Math.floor(const_1.gameLength / this.loopLength);
+        console.log("modulo loops: ", this.moduloLoops, "game length: ", const_1.gameLength, "loop index: ", this.loopIndex);
     }
 }
 exports.Tempo = Tempo;

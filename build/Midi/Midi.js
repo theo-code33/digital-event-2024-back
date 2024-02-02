@@ -40,6 +40,7 @@ class Midi extends Tempo_1.default {
                         this.isRestarting = false;
                         index_1.currentTempo.setBpm(60000 / deltaTime * 4);
                         index_1.currentTempo.setLoopLength(deltaTime * 15);
+                        index_1.currentTempo.setModuloLoops();
                         index_1.currentTempo.setCurrentMesure(1);
                     }, deltaTime);
                 }

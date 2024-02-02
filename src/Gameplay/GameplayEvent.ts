@@ -3,13 +3,15 @@ import {currentMidi} from "../index";
 import Event from "../Event";
 import {network} from "../utils/const";
 export default class GameplayEvent{
-    private readonly player1Domination: number;
-    constructor(player1Domination: number){
-        this.player1Domination = player1Domination
+    private score1: number;
+    private score2: number;
+    constructor(score1: number, score2: number){
+        this.score1 = score1;
+        this.score2 = score2;
     }
     public sendEvent(): void {
-        switch (this.player1Domination) {
-            case 0:
+        switch (this.score1 - this.score2) {
+            case -3:
                 currentMidi.listenLogicTempo(
                     true,
                     {
@@ -19,7 +21,7 @@ export default class GameplayEvent{
                     isAlreadyFired: false
                 });
                 break;
-            case 17:
+            case -2:
                 currentMidi.listenLogicTempo(
                     true,
                     {
@@ -29,7 +31,7 @@ export default class GameplayEvent{
                     isAlreadyFired: false
                 });
                 break;
-            case 33:
+            case -1:
                 currentMidi.listenLogicTempo(
                     true,
                     {
@@ -39,7 +41,7 @@ export default class GameplayEvent{
                         isAlreadyFired: false
                     });
                 break;
-            case 50:
+            case 0:
                 currentMidi.listenLogicTempo(
                     true,
                     {
@@ -49,7 +51,7 @@ export default class GameplayEvent{
                         isAlreadyFired: false
                     });
                 break;
-            case 66:
+            case 1:
                 currentMidi.listenLogicTempo(
                     true,
                     {
@@ -59,7 +61,7 @@ export default class GameplayEvent{
                         isAlreadyFired: false
                     });
                 break;
-            case 83:
+            case 2:
                 currentMidi.listenLogicTempo(
                     true,
                     {
@@ -69,7 +71,7 @@ export default class GameplayEvent{
                         isAlreadyFired: false
                     });
                 break;
-            case 100:
+            case 3:
                 currentMidi.listenLogicTempo(
                     true,
                     {

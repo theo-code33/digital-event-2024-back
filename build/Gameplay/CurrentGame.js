@@ -19,9 +19,7 @@ class CurrentGame {
         this.player2.init();
     }
     checkScore() {
-        this.totalScore = this.player1.level + this.player2.level;
-        this.player1Domination = Math.round((this.player1.level / this.totalScore) * 100);
-        new GameplayEvent_1.default(this.player1Domination).sendEvent();
+        new GameplayEvent_1.default(this.player1.level, this.player2.level).sendEvent();
     }
     stopGame() {
         this.player1 = null;

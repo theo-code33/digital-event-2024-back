@@ -39,6 +39,7 @@ export class Midi extends Tempo {
             this.isRestarting = false;
             currentTempo.setBpm(60000 / deltaTime * 4);
             currentTempo.setLoopLength(deltaTime * 15);
+            currentTempo.setModuloLoops();
             currentTempo.setCurrentMesure(1);
           }, deltaTime);
         }

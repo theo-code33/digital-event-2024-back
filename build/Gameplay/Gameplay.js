@@ -30,6 +30,7 @@ exports.Gameplay = void 0;
 const HID = __importStar(require("node-hid"));
 const InitialCombination_1 = __importDefault(require("./utils/InitialCombination"));
 const CurrentGame_1 = __importDefault(require("./CurrentGame"));
+const const_1 = require("../utils/const");
 let currentGame;
 class Gameplay {
     constructor(path, deviceSlot, initialBtnValue, possibilityPlayer) {
@@ -87,7 +88,7 @@ class Gameplay {
     endGame() {
         setTimeout(() => {
             currentGame.stopGame();
-        }, 180000);
+        }, const_1.gameLength);
     }
 }
 exports.Gameplay = Gameplay;

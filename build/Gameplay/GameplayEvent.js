@@ -6,12 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Logic_1 = __importDefault(require("../Logic"));
 const index_1 = require("../index");
 class GameplayEvent {
-    constructor(player1Domination) {
-        this.player1Domination = player1Domination;
+    constructor(score1, score2) {
+        this.score1 = score1;
+        this.score2 = score2;
     }
     sendEvent() {
-        switch (this.player1Domination) {
-            case 0:
+        switch (this.score1 - this.score2) {
+            case -3:
                 index_1.currentMidi.listenLogicTempo(true, {
                     function: () => {
                         new Logic_1.default(0, "cc", "8", "90").sendMidi();
@@ -19,7 +20,7 @@ class GameplayEvent {
                     isAlreadyFired: false
                 });
                 break;
-            case 17:
+            case -2:
                 index_1.currentMidi.listenLogicTempo(true, {
                     function: () => {
                         new Logic_1.default(0, "cc", "3", "90").sendMidi();
@@ -27,7 +28,7 @@ class GameplayEvent {
                     isAlreadyFired: false
                 });
                 break;
-            case 33:
+            case -1:
                 index_1.currentMidi.listenLogicTempo(true, {
                     function: () => {
                         new Logic_1.default(0, "cc", "7", "90").sendMidi();
@@ -35,7 +36,7 @@ class GameplayEvent {
                     isAlreadyFired: false
                 });
                 break;
-            case 50:
+            case 0:
                 index_1.currentMidi.listenLogicTempo(true, {
                     function: () => {
                         new Logic_1.default(0, "cc", "2", "90").sendMidi();
@@ -43,7 +44,7 @@ class GameplayEvent {
                     isAlreadyFired: false
                 });
                 break;
-            case 66:
+            case 1:
                 index_1.currentMidi.listenLogicTempo(true, {
                     function: () => {
                         new Logic_1.default(0, "cc", "6", "90").sendMidi();
@@ -51,7 +52,7 @@ class GameplayEvent {
                     isAlreadyFired: false
                 });
                 break;
-            case 83:
+            case 2:
                 index_1.currentMidi.listenLogicTempo(true, {
                     function: () => {
                         new Logic_1.default(0, "cc", "5", "90").sendMidi();
@@ -59,7 +60,7 @@ class GameplayEvent {
                     isAlreadyFired: false
                 });
                 break;
-            case 100:
+            case 3:
                 index_1.currentMidi.listenLogicTempo(true, {
                     function: () => {
                         new Logic_1.default(0, "cc", "5", "90").sendMidi();
