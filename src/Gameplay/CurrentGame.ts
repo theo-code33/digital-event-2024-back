@@ -21,12 +21,6 @@ export default class CurrentGame {
         this.totalScore = this.player1.level + this.player2.level
         this.player1Domination = Math.round((this.player1.level / this.totalScore) * 100)
 
-        const test = () => {
-            console.log("function shipped !")
-        }
-
-        currentTempo.midiGateway(test)
-
         new GameplayEvent(this.player1Domination).sendEvent()
     }
 

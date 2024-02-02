@@ -40,9 +40,6 @@ export class Midi extends Tempo {
             currentTempo.setBpm(60000 / deltaTime * 4);
             currentTempo.setLoopLength(deltaTime * 15);
             currentTempo.setCurrentMesure(1);
-            currentTempo.midiGateway(() => {
-              console.log('has just restarted !');
-            });
           }, deltaTime);
         }
       }

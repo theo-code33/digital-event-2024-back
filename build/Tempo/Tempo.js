@@ -30,7 +30,7 @@ class Tempo {
         return this.loopLength;
     }
     setCurrentMesure(mesure) {
-        this.currentMesure = mesure == 16 ? 1 : mesure;
+        this.currentMesure = mesure == 17 ? 1 : mesure;
     }
     getCurrentMesure() {
         return this.currentMesure;

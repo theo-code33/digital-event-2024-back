@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Gameplay_1 = require("./Gameplay");
 const DisplayConnectedDevices_1 = __importDefault(require("./utils/DisplayConnectedDevices"));
 const GameplayEvent_1 = __importDefault(require("./GameplayEvent"));
-const index_1 = require("../index");
 class CurrentGame {
     constructor() {
         this.totalScore = 0;
@@ -22,10 +21,6 @@ class CurrentGame {
     checkScore() {
         this.totalScore = this.player1.level + this.player2.level;
         this.player1Domination = Math.round((this.player1.level / this.totalScore) * 100);
-        const test = () => {
-            console.log("function shipped !");
-        };
-        index_1.currentTempo.midiGateway(test);
         new GameplayEvent_1.default(this.player1Domination).sendEvent();
     }
     stopGame() {

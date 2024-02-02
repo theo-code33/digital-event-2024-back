@@ -7,10 +7,10 @@ import Gameplay from "./Gameplay";
 export { Tempo, Midi, Event, MadMapper, Logic, Gameplay };
 
 export const currentTempo = new Tempo(120, 1000);
-const midi = new Midi("midi", 120, 1000);
-midi.listenLogicTempo(false);
+export const currentMidi = new Midi("midi", 120, 1000);
+currentMidi.listenLogicTempo(false);
 const initFunction = {
     function: () => {console.log('init function')},
     isAlreadyFired: false
 }
-midi.listenLogicTempo(true, initFunction);
+currentMidi.listenLogicTempo(true, initFunction);

@@ -35,7 +35,7 @@ export class Tempo {
   }
 
   public setCurrentMesure(mesure: number): void {
-    this.currentMesure = mesure == 16 ? 1 : mesure;
+    this.currentMesure = mesure == 17 ? 1 : mesure;
   }
 
   public getCurrentMesure(): number {

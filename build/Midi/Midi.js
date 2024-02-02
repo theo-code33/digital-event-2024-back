@@ -41,9 +41,6 @@ class Midi extends Tempo_1.default {
                         index_1.currentTempo.setBpm(60000 / deltaTime * 4);
                         index_1.currentTempo.setLoopLength(deltaTime * 15);
                         index_1.currentTempo.setCurrentMesure(1);
-                        index_1.currentTempo.midiGateway(() => {
-                            console.log('has just restarted !');
-                        });
                     }, deltaTime);
                 }
             }
