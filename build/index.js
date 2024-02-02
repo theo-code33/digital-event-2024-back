@@ -18,4 +18,4 @@ const Gameplay_1 = __importDefault(require("./Gameplay"));
 exports.Gameplay = Gameplay_1.default;
 exports.currentTempo = new Tempo_1.default(120, 1000);
 const midi = new Midi_1.default("midi", 120, 1000);
-midi.listenLogicTempo();
+midi.listenLogicTempo(() => { console.log("init !"); });

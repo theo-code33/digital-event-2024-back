@@ -14,29 +14,37 @@ export class Midi extends Tempo {
     super(bpm, loopLength);
     this.input = new easymidi.Input(network, false);
   }
-  public listenLogicTempo(): void {
+  public listenLogicTempo(callbackFunction: () => void): void {
     this.input.on("noteon", (msg) => {
       if (msg.velocity === 112 && !this.isRestarting) {
+        currentTempo.setCurrentMesure(currentTempo.getCurrentMesure() + 1);
         this.tempoNotesArray.push(new Date().getTime());
         const lastNote = this.tempoNotesArray[this.tempoNotesArray.length - 1];
         const noteBeforeLastNote = this.tempoNotesArray[this.tempoNotesArray.length - 2];
 
         const deltaTime = lastNote - noteBeforeLastNote;
 
-        currentTempo.setBpm(60000 / deltaTime * 4);
-        currentTempo.setLoopLength(deltaTime * 15);
+        console.log("current loop length:", currentTempo.getLoopLength(), 'current bpm:', currentTempo.getBpm(), "current mesure:", currentTempo.getCurrentMesure());
+
+        if (currentTempo.getCurrentMesure() === 1) {
+          callbackFunction();
+        }
 
         if (this.tempoNotesArray.length == 2 && !this.isAlreadyStarted) {
-          new Logic(0, "cc", "4", "9").sendMidi();
-          console.log("restart !")
+          new Logic(0, "cc", "4", "10").sendMidi();
+          console.log("restart !");
           this.isAlreadyStarted = true;
           this.isRestarting = true;
           setTimeout(() => {
             this.isRestarting = false;
-          }, deltaTime * 2);
+            currentTempo.setBpm(60000 / deltaTime * 4);
+            currentTempo.setLoopLength(deltaTime * 15);
+            currentTempo.setCurrentMesure(1);
+            currentTempo.midiGateway(() => {
+              console.log('has just restarted !');
+            });
+          }, deltaTime);
         }
-
-        console.log(currentTempo.getBpm(), currentTempo.getLoopLength());
       }
     });
   }
