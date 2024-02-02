@@ -14,9 +14,13 @@ export class Midi extends Tempo {
     super(bpm, loopLength);
     this.input = new easymidi.Input(network, false);
   }
-  public listenLogicTempo(callbackFunction: () => void): void {
+  public listenLogicTempo(isGateway: boolean, callbackFunction?: any): void {
     this.input.on("noteon", (msg) => {
-      if (msg.velocity === 112 && !this.isRestarting) {
+      if (msg.velocity === 112 && isGateway && currentTempo.getCurrentMesure() === 1 && callbackFunction && !callbackFunction.isAlreadyFired) {
+        callbackFunction.function();
+        callbackFunction.isAlreadyFired = true;
+      }
+      if (msg.velocity === 112 && !this.isRestarting && !isGateway) {
         currentTempo.setCurrentMesure(currentTempo.getCurrentMesure() + 1);
         this.tempoNotesArray.push(new Date().getTime());
         const lastNote = this.tempoNotesArray[this.tempoNotesArray.length - 1];
@@ -25,10 +29,6 @@ export class Midi extends Tempo {
         const deltaTime = lastNote - noteBeforeLastNote;
 
         console.log("current loop length:", currentTempo.getLoopLength(), 'current bpm:', currentTempo.getBpm(), "current mesure:", currentTempo.getCurrentMesure());
-
-        if (currentTempo.getCurrentMesure() === 1) {
-          callbackFunction();
-        }
 
         if (this.tempoNotesArray.length == 2 && !this.isAlreadyStarted) {
           new Logic(0, "cc", "4", "10").sendMidi();

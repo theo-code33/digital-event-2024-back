@@ -18,18 +18,19 @@ class Midi extends Tempo_1.default {
         this.isRestarting = false;
         this.input = new easymidi_1.default.Input(const_1.network, false);
     }
-    listenLogicTempo(callbackFunction) {
+    listenLogicTempo(isGateway, callbackFunction) {
         this.input.on("noteon", (msg) => {
-            if (msg.velocity === 112 && !this.isRestarting) {
+            if (msg.velocity === 112 && isGateway && index_1.currentTempo.getCurrentMesure() === 1 && callbackFunction && !callbackFunction.isAlreadyFired) {
+                callbackFunction.function();
+                callbackFunction.isAlreadyFired = true;
+            }
+            if (msg.velocity === 112 && !this.isRestarting && !isGateway) {
                 index_1.currentTempo.setCurrentMesure(index_1.currentTempo.getCurrentMesure() + 1);
                 this.tempoNotesArray.push(new Date().getTime());
                 const lastNote = this.tempoNotesArray[this.tempoNotesArray.length - 1];
                 const noteBeforeLastNote = this.tempoNotesArray[this.tempoNotesArray.length - 2];
                 const deltaTime = lastNote - noteBeforeLastNote;
                 console.log("current loop length:", index_1.currentTempo.getLoopLength(), 'current bpm:', index_1.currentTempo.getBpm(), "current mesure:", index_1.currentTempo.getCurrentMesure());
-                if (index_1.currentTempo.getCurrentMesure() === 1) {
-                    callbackFunction();
-                }
                 if (this.tempoNotesArray.length == 2 && !this.isAlreadyStarted) {
                     new Logic_1.default(0, "cc", "4", "10").sendMidi();
                     console.log("restart !");
