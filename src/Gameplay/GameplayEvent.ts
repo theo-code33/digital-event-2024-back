@@ -11,7 +11,7 @@ export default class GameplayEvent{
     public sendEvent(): void {
         switch (this.score1 - this.score2) {
             case -3:
-                currentMidi.listenLogicTempo(
+                currentMidi.tempoGateway(
                     true,
                     {
                     function: () => {
@@ -22,7 +22,7 @@ export default class GameplayEvent{
                 });
                 break;
             case -2:
-                currentMidi.listenLogicTempo(
+                currentMidi.tempoGateway(
                     true,
                     {
                     function: () => {
@@ -33,7 +33,7 @@ export default class GameplayEvent{
                 });
                 break;
             case -1:
-                currentMidi.listenLogicTempo(
+                currentMidi.tempoGateway(
                     true,
                     {
                         function: () => {
@@ -44,7 +44,7 @@ export default class GameplayEvent{
                     });
                 break;
             case 0:
-                currentMidi.listenLogicTempo(
+                currentMidi.tempoGateway(
                     true,
                     {
                         function: () => {
@@ -55,7 +55,7 @@ export default class GameplayEvent{
                     });
                 break;
             case 1:
-                currentMidi.listenLogicTempo(
+                currentMidi.tempoGateway(
                     true,
                     {
                         function: () => {
@@ -66,7 +66,7 @@ export default class GameplayEvent{
                     });
                 break;
             case 2:
-                currentMidi.listenLogicTempo(
+                currentMidi.tempoGateway(
                     true,
                     {
                         function: () => {
@@ -77,7 +77,7 @@ export default class GameplayEvent{
                     });
                 break;
             case 3:
-                currentMidi.listenLogicTempo(
+                currentMidi.tempoGateway(
                     true,
                     {
                         function: () => {
