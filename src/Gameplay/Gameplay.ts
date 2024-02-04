@@ -4,7 +4,6 @@ import GameplayEvent from "./GameplayEvent";
 import CurrentGame from "./CurrentGame";
 import {gameLength} from "../utils/const";
 
-let currentGame: any;
 export class Gameplay {
   private hidiDevice: any
   private readonly deviceSlot: number
@@ -12,15 +11,17 @@ export class Gameplay {
   private gameArray: number[] = []
   private readonly possibilityPlayer: number[];
   public level: number = 1;
-  private readonly combinationPlayer: number[]
+  public combinationPlayer: number[]
+  public currentGame: CurrentGame;
   constructor(
-      path: string, deviceSlot: number, initialBtnValue: number, possibilityPlayer: number[]
+      path: string, deviceSlot: number, initialBtnValue: number, possibilityPlayer: number[], currentGame: CurrentGame
   ) {
     this.hidiDevice = new HID.HID(path);
     this.deviceSlot = deviceSlot;
     this.initialBtnValue = initialBtnValue;
     this.possibilityPlayer = possibilityPlayer;
-    this.combinationPlayer = initialCombination(this.possibilityPlayer);
+    this.combinationPlayer = this.getInitialCombination();
+    this.currentGame = currentGame
   }
 
   startGame(): void {
@@ -39,7 +40,7 @@ export class Gameplay {
         console.log(inputArray[this.deviceSlot], this.combinationPlayer, this.level);
         this.gameArray.push(inputArray[this.deviceSlot]);
         const isCombinationTrue: boolean | undefined = this.checkCombinationPlayer();
-        if (isCombinationTrue) this.level++ && currentGame.checkScore();
+        if (isCombinationTrue) this.level++ && this.currentGame.checkScore();
         isClicking = true;
       }
 
@@ -77,8 +78,16 @@ export class Gameplay {
 
   endGame(): void {
     setTimeout(() => {
-      currentGame.stopGame();
+      this.currentGame.stopGame();
     }, gameLength);
+  }
+
+  getInitialCombination(): number[] {
+    return initialCombination(this.possibilityPlayer);
+  }
+
+  setInitialCombination(): void {
+    this.combinationPlayer = initialCombination(this.possibilityPlayer);
   }
 }
 
@@ -86,5 +95,3 @@ export class Gameplay {
 // const device2 = new Gameplay(devicePaths[1].path, 6, 0, [1, 2, 4]);
 // device1.init();
 // device2.init();
-currentGame = new CurrentGame();
-currentGame.startGame();

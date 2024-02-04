@@ -1,18 +1,21 @@
 import Tempo from "../Tempo";
 import easymidi from "easymidi";
 import {network} from "../utils/const";
-import {currentTempo} from "../index";
+import {currentGame, currentTempo} from "../index";
 import tempo from "../Tempo";
 import Logic from "../Logic";
+import CurrentGame from "../Gameplay/CurrentGame";
 
 export class Midi extends Tempo {
     public input: easymidi.Input;
     private tempoNotesArray: number[] = [];
     private isAlreadyStarted: boolean = false;
     private isRestarting: boolean = false;
+    private akai: easymidi.Input
   constructor(public midi: string, bpm: number, loopLength: number) {
     super(bpm, loopLength);
     this.input = new easymidi.Input(network, false);
+    this.akai = new easymidi.Input("LPD8", false);
   }
   public listenLogicTempo(isGateway: boolean, callbackFunction?: any): void {
     this.input.on("noteon", (msg) => {
@@ -43,6 +46,14 @@ export class Midi extends Tempo {
             currentTempo.setCurrentMesure(1);
           }, deltaTime);
         }
+      }
+    });
+  }
+
+  public listenMidi(): void {
+    this.akai.on("noteon", (msg) => {
+      if (msg.note === 41 && msg.channel == 0) {
+        currentGame.startGame();
       }
     });
   }

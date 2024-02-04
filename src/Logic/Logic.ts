@@ -1,6 +1,6 @@
-import { network } from "../utils/const";
 import { Event } from "../Event/Event";
 import { EventType } from "../types/event.types";
+import {network} from "../utils/const";
 export class Logic extends Event {
   constructor(
       public channel: number,
@@ -21,5 +21,9 @@ export class Logic extends Event {
         new Event(this.channel, this.eventType, controller, this.velocity).sendMidi();
       })
     }
+  }
+
+  init() {
+
   }
 }
