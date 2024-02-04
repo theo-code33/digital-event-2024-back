@@ -1,6 +1,6 @@
 import { Gameplay } from "./Gameplay";
 import GameplayEvent from "./GameplayEvent";
-import {devicePaths} from "../index";
+import {currentTempo, devicePaths} from "../index";
 export default class CurrentGame {
     public player1: any;
     public player2: any;
@@ -29,6 +29,7 @@ export default class CurrentGame {
 
         this.player1.combinationPlayer = []
         this.player2.combinationPlayer = []
+        currentTempo.setCurrentMesure(true)
 
         console.log("Game stopped");
     }

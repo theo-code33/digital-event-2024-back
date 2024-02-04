@@ -13,7 +13,7 @@ export class Midi extends Tempo {
     private isRestarting: boolean = false;
     private akai: easymidi.Input
   constructor(public midi: string, bpm: number, loopLength: number) {
-    super(bpm, loopLength);
+    super(bpm);
     this.input = new easymidi.Input(network, false);
     this.akai = new easymidi.Input("LPD8", false);
   }
@@ -24,14 +24,12 @@ export class Midi extends Tempo {
         callbackFunction.isAlreadyFired = true;
       }
       if (msg.velocity === 112 && !this.isRestarting && !isGateway) {
-        currentTempo.setCurrentMesure(currentTempo.getCurrentMesure() + 1);
+        currentTempo.setCurrentMesure();
         this.tempoNotesArray.push(new Date().getTime());
         const lastNote = this.tempoNotesArray[this.tempoNotesArray.length - 1];
         const noteBeforeLastNote = this.tempoNotesArray[this.tempoNotesArray.length - 2];
 
         const deltaTime = lastNote - noteBeforeLastNote;
-
-        console.log("current loop length:", currentTempo.getLoopLength(), 'current bpm:', currentTempo.getBpm(), "current mesure:", currentTempo.getCurrentMesure());
 
         if (this.tempoNotesArray.length == 2 && !this.isAlreadyStarted) {
           new Logic(0, "cc", 50, 10).sendMidi();
@@ -40,10 +38,7 @@ export class Midi extends Tempo {
           this.isRestarting = true;
           setTimeout(() => {
             this.isRestarting = false;
-            currentTempo.setBpm(60000 / deltaTime * 4);
-            currentTempo.setLoopLength(deltaTime * 15);
-            currentTempo.setModuloLoops();
-            currentTempo.setCurrentMesure(1);
+            currentTempo.setCurrentMesure();
           }, deltaTime);
         }
       }
