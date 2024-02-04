@@ -6,8 +6,16 @@ export class Logic extends Event {
       public channel: number,
       public eventType: EventType,
       public note: number,
-      public velocity: number
+      public velocity: number,
+      public controllers?: number[],
   ) {
     super(channel, eventType, note, velocity);
+  }
+  setAllVolumes() {
+    if (this.controllers) {
+      this.controllers.forEach((controller) => {
+        new Event(this.channel, this.eventType, controller, this.velocity).sendMidi();
+      })
+    }
   }
 }
