@@ -5,9 +5,10 @@ import {currentTempo} from "../index";
 import {gameLength} from "../utils/const";
 
 export class Tempo {
-  public currentMesure: number = 0;
+  public currentMesure: number = -1;
   public moduloLoops: number = 0;
   public currentChan: number = 0;
+  public currentMusic: number = 1;
 
   constructor(public bpm: number) {
   }
@@ -31,4 +32,12 @@ export class Tempo {
   public getCurrentMesure(): number {
     return this.currentMesure;
   }
+
+  public setCurrentMusic(music: number): void {
+    this.currentMusic = music == 6 ? 0 : music
+  }
+
+    public getCurrentMusic(): number {
+        return this.currentMusic;
+    }
 }

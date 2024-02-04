@@ -15,7 +15,7 @@ export default class GameplayEvent{
                     {
                     function: () => {
                         this.resetAllVolumesToZero();
-                        // new Logic(currentTempo.getCurrentChan(), "cc", 1, 90).sendMidiWithTransition([0, 90])
+                        new Logic(currentTempo.getCurrentMusic(), "cc", 4, 90).sendMidi()
                     },
                     isAlreadyFired: false
                 });
@@ -25,7 +25,7 @@ export default class GameplayEvent{
                     {
                     function: () => {
                         this.resetAllVolumesToZero();
-                        // new Logic(currentTempo.getCurrentChan(), "cc", 2, 90).sendMidiWithTransition([0, 90])
+                        new Logic(currentTempo.getCurrentMusic(), "cc", 5, 90).sendMidi()
                     },
                     isAlreadyFired: false
                 });
@@ -35,7 +35,7 @@ export default class GameplayEvent{
                     {
                         function: () => {
                             this.resetAllVolumesToZero();
-                            // new Logic(currentTempo.getCurrentChan(), "cc", 3, 90).sendMidiWithTransition([0, 90])
+                            new Logic(currentTempo.getCurrentMusic(), "cc", 6, 90).sendMidi()
                         },
                         isAlreadyFired: false
                     });
@@ -45,7 +45,7 @@ export default class GameplayEvent{
                     {
                         function: () => {
                             this.resetAllVolumesToZero();
-                            // new Logic(currentTempo.getCurrentChan(), "cc", 4, 90).sendMidiWithTransition([0, 90])
+                            new Logic(currentTempo.getCurrentMusic(), "cc", 7, 90).sendMidi()
                         },
                         isAlreadyFired: false
                     });
@@ -55,7 +55,7 @@ export default class GameplayEvent{
                     {
                         function: () => {
                             this.resetAllVolumesToZero();
-                            // new Logic(currentTempo.getCurrentChan(), "cc", 5, 90).sendMidiWithTransition([0, 90])
+                            new Logic(currentTempo.getCurrentMusic(), "cc", 8, 90).sendMidi()
                         },
                         isAlreadyFired: false
                     });
@@ -65,7 +65,7 @@ export default class GameplayEvent{
                     {
                         function: () => {
                             this.resetAllVolumesToZero();
-                            // new Logic(currentTempo.getCurrentChan(), "cc", 6, 90).sendMidiWithTransition([0, 90])
+                            new Logic(currentTempo.getCurrentMusic(), "cc", 9, 90).sendMidi()
                         },
                         isAlreadyFired: false
                     });
@@ -75,7 +75,7 @@ export default class GameplayEvent{
                     {
                         function: () => {
                             this.resetAllVolumesToZero();
-                            // new Logic(currentTempo.getCurrentChan(), "cc", 7, 90).sendMidiWithTransition([0, 90])
+                            new Logic(currentTempo.getCurrentMusic(), "cc", 10, 90).sendMidi()
                         },
                         isAlreadyFired: false
                     });
@@ -86,6 +86,12 @@ export default class GameplayEvent{
     }
 
     public resetAllVolumesToZero(): void {
-
+        new Logic(currentTempo.getCurrentMusic(), "cc", 4, 0).sendMidi()
+        new Logic(currentTempo.getCurrentMusic(), "cc", 5, 0).sendMidi()
+        new Logic(currentTempo.getCurrentMusic(), "cc", 6, 0).sendMidi()
+        new Logic(currentTempo.getCurrentMusic(), "cc", 7, 0).sendMidi()
+        new Logic(currentTempo.getCurrentMusic(), "cc", 8, 0).sendMidi()
+        new Logic(currentTempo.getCurrentMusic(), "cc", 9, 0).sendMidi()
+        new Logic(currentTempo.getCurrentMusic(), "cc", 10, 0).sendMidi()
     }
 }

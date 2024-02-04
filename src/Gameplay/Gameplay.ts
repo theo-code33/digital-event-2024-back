@@ -8,7 +8,7 @@ export class Gameplay {
   private hidiDevice: any
   private readonly deviceSlot: number
   private readonly initialBtnValue: number
-  private gameArray: number[] = []
+  public gameArray: number[] = []
   private readonly possibilityPlayer: number[];
   public level: number = 1;
   public combinationPlayer: number[]
@@ -30,7 +30,6 @@ export class Gameplay {
 
   public init() {
     console.log(this.combinationPlayer)
-    this.endGame()
     let isClicking = false;
     this.hidiDevice.on("data", (data: number[]) => {
       const inputArray = Array.from(data);
