@@ -11,7 +11,7 @@ export class Logic extends Event {
   ) {
     super(channel, eventType, note, velocity);
   }
-  setAllVolumes(transition?: number[]) {
+  setAllVolumes(transition?: number[]): void {
     if (this.controllers && transition) {
       this.controllers.forEach((controller) => {
         new Event(this.channel, this.eventType, controller, this.velocity).sendMidiWithTransition(transition);

@@ -1,7 +1,6 @@
 import Logic from "../Logic";
 import {currentMidi, currentTempo} from "../index";
-import Event from "../Event";
-import {network} from "../utils/const";
+
 export default class GameplayEvent{
     private readonly score1: number;
     private readonly score2: number;
