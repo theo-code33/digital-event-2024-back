@@ -12,7 +12,6 @@ export default class GameplayEvent{
         switch (this.score1 - this.score2) {
             case -3:
                 currentMidi.tempoGateway(
-                    true,
                     {
                     function: () => {
                         this.resetAllVolumesToZero();
@@ -23,7 +22,6 @@ export default class GameplayEvent{
                 break;
             case -2:
                 currentMidi.tempoGateway(
-                    true,
                     {
                     function: () => {
                         this.resetAllVolumesToZero();
@@ -34,7 +32,6 @@ export default class GameplayEvent{
                 break;
             case -1:
                 currentMidi.tempoGateway(
-                    true,
                     {
                         function: () => {
                             this.resetAllVolumesToZero();
@@ -45,7 +42,6 @@ export default class GameplayEvent{
                 break;
             case 0:
                 currentMidi.tempoGateway(
-                    true,
                     {
                         function: () => {
                             this.resetAllVolumesToZero();
@@ -56,7 +52,6 @@ export default class GameplayEvent{
                 break;
             case 1:
                 currentMidi.tempoGateway(
-                    true,
                     {
                         function: () => {
                             this.resetAllVolumesToZero();
@@ -67,7 +62,6 @@ export default class GameplayEvent{
                 break;
             case 2:
                 currentMidi.tempoGateway(
-                    true,
                     {
                         function: () => {
                             this.resetAllVolumesToZero();
@@ -78,7 +72,6 @@ export default class GameplayEvent{
                 break;
             case 3:
                 currentMidi.tempoGateway(
-                    true,
                     {
                         function: () => {
                             this.resetAllVolumesToZero();

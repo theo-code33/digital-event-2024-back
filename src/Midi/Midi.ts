@@ -2,9 +2,6 @@ import Tempo from "../Tempo";
 import easymidi from "easymidi";
 import {network} from "../utils/const";
 import {currentGame, currentTempo} from "../index";
-import tempo from "../Tempo";
-import Logic from "../Logic";
-import CurrentGame from "../Gameplay/CurrentGame";
 
 export class Midi extends Tempo {
     public networkInput: easymidi.Input;
@@ -15,14 +12,17 @@ export class Midi extends Tempo {
     this.akai = new easymidi.Input("LPD8", false);
   }
   public tempoGateway(callbackFunction?: any): void {
+      console.log('gateway is called')
     this.networkInput.on("noteon", (msg) => {
+      console.log("gateway : note received", currentTempo.getCurrentMesure() % 8)
       if (
           msg.velocity === 112 &&
-          currentTempo.getCurrentMesure() % 0 &&
+          currentTempo.getCurrentMesure() % 8 === 0 &&
           callbackFunction && !callbackFunction.isAlreadyFired &&
           msg.channel === 0 &&
-          msg.note === 36
+          msg.note === 37
       ) {
+        console.log("gateway is shipped !");
         callbackFunction.function();
         callbackFunction.isAlreadyFired = true;
       }
@@ -36,8 +36,9 @@ export class Midi extends Tempo {
       }
     });
     this.networkInput.on("noteon", (msg) => {
-        if (msg.note === 36 && msg.channel == 0) {
-            currentGame.stopGame();
+        if (msg.note === 37 && msg.channel == 0 && msg.velocity === 112) {
+          currentTempo.increaseCurrentMesure();
+          console.log("currentMesure", currentTempo.getCurrentMesure());
         }
     })
   }
