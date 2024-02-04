@@ -16,6 +16,7 @@ export default class GameplayEvent{
                     true,
                     {
                     function: () => {
+                        this.resetAllVolumesToZero();
                         new Logic(currentTempo.getCurrentChan(), "cc", 1, 90).sendMidi()
                     },
                     isAlreadyFired: false
@@ -26,6 +27,7 @@ export default class GameplayEvent{
                     true,
                     {
                     function: () => {
+                        this.resetAllVolumesToZero();
                         new Logic(currentTempo.getCurrentChan(), "cc", 2, 90).sendMidi()
                     },
                     isAlreadyFired: false
@@ -36,6 +38,7 @@ export default class GameplayEvent{
                     true,
                     {
                         function: () => {
+                            this.resetAllVolumesToZero();
                             new Logic(currentTempo.getCurrentChan(), "cc", 3, 90).sendMidi()
                         },
                         isAlreadyFired: false
@@ -46,6 +49,7 @@ export default class GameplayEvent{
                     true,
                     {
                         function: () => {
+                            this.resetAllVolumesToZero();
                             new Logic(currentTempo.getCurrentChan(), "cc", 4, 90).sendMidi()
                         },
                         isAlreadyFired: false
@@ -56,6 +60,7 @@ export default class GameplayEvent{
                     true,
                     {
                         function: () => {
+                            this.resetAllVolumesToZero();
                             new Logic(currentTempo.getCurrentChan(), "cc", 5, 90).sendMidi()
                         },
                         isAlreadyFired: false
@@ -66,6 +71,7 @@ export default class GameplayEvent{
                     true,
                     {
                         function: () => {
+                            this.resetAllVolumesToZero();
                             new Logic(currentTempo.getCurrentChan(), "cc", 6, 90).sendMidi()
                         },
                         isAlreadyFired: false
@@ -76,6 +82,7 @@ export default class GameplayEvent{
                     true,
                     {
                         function: () => {
+                            this.resetAllVolumesToZero();
                             new Logic(currentTempo.getCurrentChan(), "cc", 7, 90).sendMidi()
                         },
                         isAlreadyFired: false
@@ -84,5 +91,11 @@ export default class GameplayEvent{
             default:
                 break;
         }
+    }
+
+    public resetAllVolumesToZero(): void {
+        new Logic(0, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes()
+        new Logic(1, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes()
+        new Logic(2, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes()
     }
 }

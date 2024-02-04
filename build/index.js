@@ -18,12 +18,9 @@ const Gameplay_1 = __importDefault(require("./Gameplay"));
 exports.Gameplay = Gameplay_1.default;
 exports.currentTempo = new Tempo_1.default(120, 1000);
 exports.currentMidi = new Midi_1.default("midi", 120, 1000);
-// currentMidi.listenLogicTempo(false);
-// const initFunction = {
-//     function: () => {console.log('init function')},
-//     isAlreadyFired: false
-// }
-// currentMidi.listenLogicTempo(true, initFunction);
-new Logic_1.default(0, "cc", 90, 90, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes();
-new Logic_1.default(1, "cc", 90, 90, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes();
-new Logic_1.default(2, "cc", 90, 90, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes();
+exports.currentMidi.listenLogicTempo(false);
+const initFunction = {
+    function: () => { console.log('init function'); },
+    isAlreadyFired: false
+};
+exports.currentMidi.listenLogicTempo(true, initFunction);

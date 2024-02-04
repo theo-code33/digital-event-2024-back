@@ -8,12 +8,9 @@ export { Tempo, Midi, Event, MadMapper, Logic, Gameplay };
 
 export const currentTempo = new Tempo(120, 1000);
 export const currentMidi = new Midi("midi", 120, 1000);
-// currentMidi.listenLogicTempo(false);
-// const initFunction = {
-//     function: () => {console.log('init function')},
-//     isAlreadyFired: false
-// }
-// currentMidi.listenLogicTempo(true, initFunction);
-new Logic(0, "cc", 90, 90, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes()
-new Logic(1, "cc", 90, 90, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes()
-new Logic(2, "cc", 90, 90, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes()
+currentMidi.listenLogicTempo(false);
+const initFunction = {
+    function: () => {console.log('init function')},
+    isAlreadyFired: false
+}
+currentMidi.listenLogicTempo(true, initFunction);

@@ -54,7 +54,7 @@ export class Gameplay {
     });
   }
 
-  private checkCombinationPlayer() {
+  private checkCombinationPlayer(): boolean | undefined {
     for (let i: number = 0; i < this.gameArray.length; i++) {
       if (this.gameArray[i] != this.combinationPlayer[i]) {
         this.gameArray.length = 0;
@@ -86,5 +86,5 @@ export class Gameplay {
 // const device2 = new Gameplay(devicePaths[1].path, 6, 0, [1, 2, 4]);
 // device1.init();
 // device2.init();
-// currentGame = new CurrentGame();
-// currentGame.startGame();
+currentGame = new CurrentGame();
+currentGame.startGame();
