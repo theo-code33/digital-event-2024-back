@@ -24,3 +24,6 @@ const initFunction = {
     isAlreadyFired: false
 };
 exports.currentMidi.listenLogicTempo(true, initFunction);
+// new Logic(0, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes([90, 0])
+// new Logic(1, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes([90, 0])
+// new Logic(2, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes([90, 0])

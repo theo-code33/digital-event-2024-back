@@ -11,10 +11,10 @@ class Logic extends Event_1.Event {
         this.velocity = velocity;
         this.controllers = controllers;
     }
-    setAllVolumes() {
+    setAllVolumes(transition) {
         if (this.controllers) {
             this.controllers.forEach((controller) => {
-                new Event_1.Event(this.channel, this.eventType, controller, this.velocity).sendMidi();
+                new Event_1.Event(this.channel, this.eventType, controller, this.velocity).sendMidiWithTransition(transition);
             });
         }
     }

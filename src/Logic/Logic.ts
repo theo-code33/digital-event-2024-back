@@ -11,10 +11,10 @@ export class Logic extends Event {
   ) {
     super(channel, eventType, note, velocity);
   }
-  setAllVolumes() {
+  setAllVolumes(transition: number[]) {
     if (this.controllers) {
       this.controllers.forEach((controller) => {
-        new Event(this.channel, this.eventType, controller, this.velocity).sendMidi();
+        new Event(this.channel, this.eventType, controller, this.velocity).sendMidiWithTransition(transition);
       })
     }
   }
