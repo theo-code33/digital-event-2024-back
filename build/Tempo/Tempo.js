@@ -65,5 +65,8 @@ class Tempo {
         this.moduloLoops = Math.floor(const_1.gameLength / this.loopLength);
         console.log("modulo loops: ", this.moduloLoops, "game length: ", const_1.gameLength, "loop index: ", this.loopIndex);
     }
+    getCurrentChan() {
+        return this.currentChan;
+    }
 }
 exports.Tempo = Tempo;

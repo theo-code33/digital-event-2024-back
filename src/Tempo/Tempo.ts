@@ -72,4 +72,8 @@ export class Tempo {
     this.moduloLoops = Math.floor(gameLength / this.loopLength)
     console.log("modulo loops: ",this.moduloLoops, "game length: ", gameLength, "loop index: ", this.loopIndex)
   }
+
+  public getCurrentChan(): number {
+    return this.currentChan;
+  }
 }

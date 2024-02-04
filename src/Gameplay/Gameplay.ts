@@ -86,5 +86,5 @@ export class Gameplay {
 // const device2 = new Gameplay(devicePaths[1].path, 6, 0, [1, 2, 4]);
 // device1.init();
 // device2.init();
-currentGame = new CurrentGame();
-currentGame.startGame();
+// currentGame = new CurrentGame();
+// currentGame.startGame();

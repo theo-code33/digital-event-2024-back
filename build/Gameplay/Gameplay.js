@@ -29,7 +29,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Gameplay = void 0;
 const HID = __importStar(require("node-hid"));
 const InitialCombination_1 = __importDefault(require("./utils/InitialCombination"));
-const CurrentGame_1 = __importDefault(require("./CurrentGame"));
 const const_1 = require("../utils/const");
 let currentGame;
 class Gameplay {
@@ -96,5 +95,5 @@ exports.Gameplay = Gameplay;
 // const device2 = new Gameplay(devicePaths[1].path, 6, 0, [1, 2, 4]);
 // device1.init();
 // device2.init();
-currentGame = new CurrentGame_1.default();
-currentGame.startGame();
+// currentGame = new CurrentGame();
+// currentGame.startGame();

@@ -31,7 +31,7 @@ export class Midi extends Tempo {
         console.log("current loop length:", currentTempo.getLoopLength(), 'current bpm:', currentTempo.getBpm(), "current mesure:", currentTempo.getCurrentMesure());
 
         if (this.tempoNotesArray.length == 2 && !this.isAlreadyStarted) {
-          new Logic(0, "cc", "4", "10").sendMidi();
+          new Logic(0, "cc", 50, "10").sendMidi();
           console.log("restart !");
           this.isAlreadyStarted = true;
           this.isRestarting = true;

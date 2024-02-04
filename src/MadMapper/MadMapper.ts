@@ -5,7 +5,7 @@ export class MadMapper extends Event {
   constructor(
       public channel: number,
       public eventType: EventType,
-      public note: string,
+      public note: number,
       public velocity: string
   ) {
     super(channel, eventType, note, velocity);
