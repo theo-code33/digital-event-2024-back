@@ -6,7 +6,7 @@ export class Logic extends Event {
       public channel: number,
       public eventType: EventType,
       public note: number,
-      public velocity: string
+      public velocity: number
   ) {
     super(channel, eventType, note, velocity);
   }

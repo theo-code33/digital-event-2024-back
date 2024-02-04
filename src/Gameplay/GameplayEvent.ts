@@ -16,7 +16,7 @@ export default class GameplayEvent{
                     true,
                     {
                     function: () => {
-                        new Logic(currentTempo.getCurrentChan(), "cc", 1, "90").sendMidi()
+                        new Logic(currentTempo.getCurrentChan(), "cc", 1, 90).sendMidi()
                     },
                     isAlreadyFired: false
                 });
@@ -26,7 +26,7 @@ export default class GameplayEvent{
                     true,
                     {
                     function: () => {
-                        new Logic(currentTempo.getCurrentChan(), "cc", 2, "90").sendMidi()
+                        new Logic(currentTempo.getCurrentChan(), "cc", 2, 90).sendMidi()
                     },
                     isAlreadyFired: false
                 });
@@ -36,7 +36,7 @@ export default class GameplayEvent{
                     true,
                     {
                         function: () => {
-                            new Logic(currentTempo.getCurrentChan(), "cc", 3, "90").sendMidi()
+                            new Logic(currentTempo.getCurrentChan(), "cc", 3, 90).sendMidi()
                         },
                         isAlreadyFired: false
                     });
@@ -46,7 +46,7 @@ export default class GameplayEvent{
                     true,
                     {
                         function: () => {
-                            new Logic(currentTempo.getCurrentChan(), "cc", 4, "90").sendMidi()
+                            new Logic(currentTempo.getCurrentChan(), "cc", 4, 90).sendMidi()
                         },
                         isAlreadyFired: false
                     });
@@ -56,7 +56,7 @@ export default class GameplayEvent{
                     true,
                     {
                         function: () => {
-                            new Logic(currentTempo.getCurrentChan(), "cc", 5, "90").sendMidi()
+                            new Logic(currentTempo.getCurrentChan(), "cc", 5, 90).sendMidi()
                         },
                         isAlreadyFired: false
                     });
@@ -66,7 +66,7 @@ export default class GameplayEvent{
                     true,
                     {
                         function: () => {
-                            new Logic(currentTempo.getCurrentChan(), "cc", 6, "90").sendMidi()
+                            new Logic(currentTempo.getCurrentChan(), "cc", 6, 90).sendMidi()
                         },
                         isAlreadyFired: false
                     });
@@ -76,7 +76,7 @@ export default class GameplayEvent{
                     true,
                     {
                         function: () => {
-                            new Logic(currentTempo.getCurrentChan(), "cc", 7, "90").sendMidi()
+                            new Logic(currentTempo.getCurrentChan(), "cc", 7, 90).sendMidi()
                         },
                         isAlreadyFired: false
                     });

@@ -32,7 +32,7 @@ class Midi extends Tempo_1.default {
                 const deltaTime = lastNote - noteBeforeLastNote;
                 console.log("current loop length:", index_1.currentTempo.getLoopLength(), 'current bpm:', index_1.currentTempo.getBpm(), "current mesure:", index_1.currentTempo.getCurrentMesure());
                 if (this.tempoNotesArray.length == 2 && !this.isAlreadyStarted) {
-                    new Logic_1.default(0, "cc", 50, "10").sendMidi();
+                    new Logic_1.default(0, "cc", 50, 10).sendMidi();
                     console.log("restart !");
                     this.isAlreadyStarted = true;
                     this.isRestarting = true;

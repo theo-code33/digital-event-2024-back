@@ -8,7 +8,7 @@ export class Event {
     public channel: number,
     public eventType: EventType,
     public note: number,
-    public velocity: string
+    public velocity: number
   ) {
     this.output = new easymidi.Output(network, false);
   }
