@@ -3,8 +3,8 @@ import {currentMidi, currentTempo} from "../index";
 import Event from "../Event";
 import {network} from "../utils/const";
 export default class GameplayEvent{
-    private score1: number;
-    private score2: number;
+    private readonly score1: number;
+    private readonly score2: number;
     constructor(score1: number, score2: number){
         this.score1 = score1;
         this.score2 = score2;
@@ -94,8 +94,8 @@ export default class GameplayEvent{
     }
 
     public resetAllVolumesToZero(): void {
-        new Logic(0, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8, 9]).setAllVolumes([90, 0])
-        new Logic(1, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes([90, 0])
-        new Logic(2, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes([90, 0])
+        new Logic(0, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes()
+        new Logic(1, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes()
+        new Logic(2, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8, 9]).setAllVolumes()
     }
 }

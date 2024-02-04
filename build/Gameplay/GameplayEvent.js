@@ -80,9 +80,9 @@ class GameplayEvent {
         }
     }
     resetAllVolumesToZero() {
-        new Logic_1.default(0, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8, 9]).setAllVolumes([90, 0]);
-        new Logic_1.default(1, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes([90, 0]);
-        new Logic_1.default(2, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes([90, 0]);
+        new Logic_1.default(0, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8, 9]).setAllVolumes();
+        new Logic_1.default(1, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes();
+        new Logic_1.default(2, "cc", 90, 0, [1, 2, 3, 4, 5, 6, 7, 8]).setAllVolumes();
     }
 }
 exports.default = GameplayEvent;
