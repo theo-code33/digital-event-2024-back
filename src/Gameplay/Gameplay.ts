@@ -1,50 +1,55 @@
-import * as HID from 'node-hid';
+import * as HID from "node-hid";
 import initialCombination from "./utils/InitialCombination";
-import GameplayEvent from "./GameplayEvent";
 import CurrentGame from "./CurrentGame";
-import {gameLength} from "../utils/const";
+import { gameLength } from "../utils/const";
 
 export class Gameplay {
-  private hidiDevice: any
-  private readonly deviceSlot: number
-  private readonly initialBtnValue: number
-  public gameArray: number[] = []
+  private hidiDevice: any;
+  private readonly deviceSlot: number;
+  private readonly initialBtnValue: number;
+  public gameArray: number[] = [];
   private readonly possibilityPlayer: number[];
   public level: number = 1;
-  public combinationPlayer: number[]
+  public combinationPlayer: number[];
   public currentGame: CurrentGame;
   constructor(
-      path: string, deviceSlot: number, initialBtnValue: number, possibilityPlayer: number[], currentGame: CurrentGame
+    path: string,
+    deviceSlot: number,
+    initialBtnValue: number,
+    possibilityPlayer: number[],
+    currentGame: CurrentGame
   ) {
     this.hidiDevice = new HID.HID(path);
     this.deviceSlot = deviceSlot;
     this.initialBtnValue = initialBtnValue;
     this.possibilityPlayer = possibilityPlayer;
     this.combinationPlayer = this.getInitialCombination();
-    this.currentGame = currentGame
+    this.currentGame = currentGame;
   }
 
   startGame(): void {
-    throw new Error('Method not implemented.');
+    throw new Error("Method not implemented.");
   }
 
   public init() {
-    console.log(this.combinationPlayer)
+    console.log(this.combinationPlayer);
     let isClicking = false;
     this.hidiDevice.on("data", (data: number[]) => {
       const inputArray = Array.from(data);
-      if (
-          inputArray[this.deviceSlot] != this.initialBtnValue && !isClicking
-      ) {
-        console.log(inputArray[this.deviceSlot], this.combinationPlayer, this.level);
+      if (inputArray[this.deviceSlot] != this.initialBtnValue && !isClicking) {
+        console.log(
+          inputArray[this.deviceSlot],
+          this.combinationPlayer,
+          this.level
+        );
         this.gameArray.push(inputArray[this.deviceSlot]);
-        const isCombinationTrue: boolean | undefined = this.checkCombinationPlayer();
+        const isCombinationTrue: boolean | undefined =
+          this.checkCombinationPlayer();
         if (isCombinationTrue) this.level++ && this.currentGame.checkScore();
         isClicking = true;
-      }
-
-      else if (
-          inputArray[this.deviceSlot] == this.initialBtnValue && isClicking
+      } else if (
+        inputArray[this.deviceSlot] == this.initialBtnValue &&
+        isClicking
       ) {
         isClicking = false;
       }
@@ -62,11 +67,11 @@ export class Gameplay {
         return false;
       } else {
         if (i === this.combinationPlayer.length - 1) {
-          console.log("success !")
+          console.log("success !");
           const newPossibility =
-              this.possibilityPlayer[
-                  Math.floor(Math.random() * this.possibilityPlayer.length)
-                  ];
+            this.possibilityPlayer[
+              Math.floor(Math.random() * this.possibilityPlayer.length)
+            ];
           this.combinationPlayer.push(newPossibility);
           this.gameArray.length = 0;
           return true;

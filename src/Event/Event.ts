@@ -30,22 +30,25 @@ export class Event {
     console.log(this.eventType, payload);
   }
 
-    public sendMidiWithTransition(transition: number[]): void {
-        const isEaseIn = transition[0] < transition[1];
-        const delay = 3;
-        const iterate = (i: number) => {
-            setTimeout(() => {
-                this.velocity = i;
-                this.sendMidi();
+  public sendMidiWithTransition(transition: number[]): void {
+    const isEaseIn = transition[0] < transition[1];
+    const delay = 3;
+    const iterate = (i: number) => {
+      setTimeout(() => {
+        this.velocity = i;
+        this.sendMidi();
 
-                if ((isEaseIn && i < transition[1]) || (!isEaseIn && i > transition[1])) {
-                    iterate(isEaseIn ? i + 1 : i - 1);
-                }
-            }, delay);
-        };
+        if (
+          (isEaseIn && i < transition[1]) ||
+          (!isEaseIn && i > transition[1])
+        ) {
+          iterate(isEaseIn ? i + 1 : i - 1);
+        }
+      }, delay);
+    };
 
-        iterate(transition[0]);
-    }
+    iterate(transition[0]);
+  }
 
   public init(): void {
     console.log("init");
