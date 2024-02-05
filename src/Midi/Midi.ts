@@ -14,7 +14,7 @@ export class Midi extends Tempo {
     this.akai = new easymidi.Input("LPD8", false);
   }
   public tempoGateway(callbackFunction?: any): void {
-    this.networkInput.on("noteon", (msg) => {
+    this.logicInput.on("noteon", (msg) => {
       if (
           msg.velocity === 112 &&
           currentTempo.getCurrentMesure() % 8 === 0 &&

@@ -17,10 +17,10 @@ currentMidi.listenMidi();
 export const devicePaths: any = displayConnectedDevices();
 export let currentGame = new CurrentGame();
 
-// new Logic(1, "cc", 4, 0).sendMidi()
-// new Logic(1, "cc", 5, 0).sendMidi()
-// new Logic(1, "cc", 6, 0).sendMidi()
-// new Logic(1, "cc", 7, 0).sendMidi()
-// new Logic(1, "cc", 8, 0).sendMidi()
-// new Logic(1, "cc", 9, 0).sendMidi()
-// new Logic(1, "cc", 10, 0).sendMidi()
+new Logic(1, "cc", 4, 0).sendMidi()
+new Logic(1, "cc", 5, 0).sendMidi()
+new Logic(1, "cc", 6, 0).sendMidi()
+new Logic(1, "cc", 7, 0).sendMidi()
+new Logic(1, "cc", 8, 0).sendMidi()
+new Logic(1, "cc", 9, 0).sendMidi()
+new Logic(1, "cc", 10, 0).sendMidi()

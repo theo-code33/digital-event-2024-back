@@ -11,14 +11,16 @@ export default class GameplayEvent {
     this.score2 = score2;
   }
   public sendEvent(): void {
-    // firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-    //   player1Domination: this.score1,
-    // });
+    firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+      player1Domination: this.score1,
+    });
+    console.log('send event method called')
     switch (this.score1 - this.score2) {
       case -3:
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
+            console.log('player 1 score:', this.score1)
             new Logic(currentTempo.getCurrentMusic(), "cc", 4, 90).sendMidi();
           },
           isAlreadyFired: false,
@@ -28,6 +30,7 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
+            console.log('player 1 score:', this.score1)
             new Logic(currentTempo.getCurrentMusic(), "cc", 5, 90).sendMidi();
           },
           isAlreadyFired: false,
@@ -37,6 +40,7 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
+            console.log('player 1 score:', this.score1)
             new Logic(currentTempo.getCurrentMusic(), "cc", 6, 90).sendMidi();
           },
           isAlreadyFired: false,
@@ -46,6 +50,7 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
+            console.log('player 1 score:', this.score1)
             new Logic(currentTempo.getCurrentMusic(), "cc", 7, 90).sendMidi();
           },
           isAlreadyFired: false,
@@ -55,6 +60,7 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
+            console.log('player 1 score:', this.score1)
             new Logic(currentTempo.getCurrentMusic(), "cc", 8, 90).sendMidi();
           },
           isAlreadyFired: false,
@@ -64,6 +70,7 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
+            console.log('player 1 score:', this.score1)
             new Logic(currentTempo.getCurrentMusic(), "cc", 9, 90).sendMidi();
           },
           isAlreadyFired: false,
@@ -73,6 +80,7 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
+            console.log('player 1 score:', this.score1)
             new Logic(currentTempo.getCurrentMusic(), "cc", 10, 90).sendMidi();
           },
           isAlreadyFired: false,

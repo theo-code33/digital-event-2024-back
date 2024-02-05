@@ -1,6 +1,6 @@
 import { EventType } from "../types/event.types";
 import easymidi from "easymidi";
-import { network } from "../utils/const";
+import { network, logicProInput } from "../utils/const";
 export class Event {
   private output: easymidi.Output;
 
