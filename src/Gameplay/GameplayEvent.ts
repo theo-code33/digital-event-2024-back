@@ -1,5 +1,7 @@
 import Logic from "../Logic";
 import {currentMidi, currentTempo} from "../index";
+import {currentFirebase} from "../FirebaseService";
+import {firebaseCollectionGame, firebaseDocumentGame} from "../utils/const";
 
 export default class GameplayEvent{
     private readonly score1: number;
@@ -9,6 +11,9 @@ export default class GameplayEvent{
         this.score2 = score2;
     }
     public sendEvent(): void {
+        currentFirebase.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+            "player1Domination": this.score1,
+        })
         switch (this.score1 - this.score2) {
             case -3:
                 currentMidi.tempoGateway(

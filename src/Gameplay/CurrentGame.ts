@@ -9,6 +9,9 @@ export default class CurrentGame {
     public player2: any;
 
     startGame() {
+        currentFirebase.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+            chronoStarted: true,
+        })
         setTimeout(() => {
             if (this.player1 === undefined && this.player2 === undefined) {
                 this.player1 = new Gameplay(devicePaths[0].path, 5, 15, [31, 47, 79], this)
@@ -20,6 +23,11 @@ export default class CurrentGame {
                 this.player1.combinationPlayer = this.player1.getInitialCombination()
                 this.player2.combinationPlayer = this.player2.getInitialCombination()
             }
+
+            currentFirebase.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+                "winnerIs": "",
+                "isActive": true,
+            })
 
             this.player1.endGame()
             this.player2.endGame()
@@ -41,6 +49,8 @@ export default class CurrentGame {
         const winner = this.player1.level > this.player2.level ? "player1" : "player2"
         currentFirebase.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
             "winnerIs": winner,
+            "isActive": false,
+            "chronoStarted": false,
         })
         this.player1.level = 0
         this.player2.level = 0
