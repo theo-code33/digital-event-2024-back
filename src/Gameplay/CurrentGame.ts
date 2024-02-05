@@ -13,9 +13,9 @@ export default class CurrentGame {
   public player2: any;
 
   startGame() {
-    firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-      chronoStarted: true,
-    });
+    // firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+    //   chronoStarted: true,
+    // });
     setTimeout(() => {
       if (this.player1 === undefined && this.player2 === undefined) {
         this.player1 = new Gameplay(
@@ -57,10 +57,10 @@ export default class CurrentGame {
   stopGame() {
     const winner =
       this.player1.level > this.player2.level ? "player1" : "player2";
-    firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-      winnerIs: winner,
-      chronoStarted: false,
-    });
+    // firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+    //   winnerIs: winner,
+    //   chronoStarted: false,
+    // });
     this.player1.level = 0;
     this.player2.level = 0;
 

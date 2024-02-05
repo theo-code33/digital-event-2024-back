@@ -11,9 +11,9 @@ export default class GameplayEvent {
     this.score2 = score2;
   }
   public sendEvent(): void {
-    firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-      player1Domination: this.score1,
-    });
+    // firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+    //   player1Domination: this.score1,
+    // });
     switch (this.score1 - this.score2) {
       case -3:
         currentMidi.tempoGateway({

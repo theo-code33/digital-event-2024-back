@@ -25,7 +25,7 @@ export class FirebaseService {
       }
     });
     if(!this.app) this.app = initializeApp(firebaseConfig);
-    this.db = firestore();
+    this.db = firestore(admin.app);
 
     console.log("Firebase initialized successfully ! 🎉");
   }
