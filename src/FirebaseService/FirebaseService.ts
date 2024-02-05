@@ -1,6 +1,6 @@
 import { firestore } from "firebase-admin";
 import { initializeApp } from "firebase-admin/app";
-// import "dotenv/config";
+import "dotenv/config";
 
 export class FirebaseService {
   private app: any;
@@ -24,9 +24,8 @@ export class FirebaseService {
         throw new Error(`Missing firebase config value for key: ${key}`);
       }
     });
-
-    this.app = initializeApp(firebaseConfig);
-    this.db = firestore(this.app);
+    if(!this.app) this.app = initializeApp(firebaseConfig);
+    this.db = firestore();
 
     console.log("Firebase initialized successfully ! 🎉");
   }

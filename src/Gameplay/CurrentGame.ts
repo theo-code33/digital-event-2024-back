@@ -26,7 +26,6 @@ export default class CurrentGame {
 
             currentFirebase.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
                 "winnerIs": "",
-                "isActive": true,
             })
 
             this.player1.endGame()
@@ -49,7 +48,6 @@ export default class CurrentGame {
         const winner = this.player1.level > this.player2.level ? "player1" : "player2"
         currentFirebase.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
             "winnerIs": winner,
-            "isActive": false,
             "chronoStarted": false,
         })
         this.player1.level = 0
