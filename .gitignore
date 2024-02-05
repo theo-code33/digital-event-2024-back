@@ -135,3 +135,6 @@ dist
 
 # JetBrains WebStorm
 .idea/
+
+# Firebase
+serviceAccountKey.json
