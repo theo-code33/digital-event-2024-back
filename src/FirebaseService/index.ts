@@ -1,4 +1,4 @@
 import { FirebaseService } from "./FirebaseService";
 export default FirebaseService;
 
-new FirebaseService();
+export const currentFirebase = new FirebaseService();

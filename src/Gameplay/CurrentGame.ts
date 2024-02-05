@@ -1,8 +1,9 @@
 import { Gameplay } from "./Gameplay";
 import GameplayEvent from "./GameplayEvent";
 import {currentMidi, currentTempo, devicePaths} from "../index";
-import {introLenghtMS} from "../utils/const";
+import {introLenghtMS, firebaseCollectionGame, firebaseDocumentGame} from "../utils/const";
 import Logic from "../Logic";
+import {currentFirebase} from "../FirebaseService";
 export default class CurrentGame {
     public player1: any;
     public player2: any;
@@ -37,6 +38,10 @@ export default class CurrentGame {
     }
 
     stopGame() {
+        const winner = this.player1.level > this.player2.level ? "player1" : "player2"
+        currentFirebase.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+            "winnerIs": winner,
+        })
         this.player1.level = 0
         this.player2.level = 0
 
