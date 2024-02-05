@@ -30,6 +30,12 @@ export class FirebaseService {
         return snapshot.data();
     }
 
+    public async createDoc(
+        collection: string,
+        data: any): Promise<void> {
+        await this.db.collection(collection).add(data);
+    }
+
     public async setDoc(
         collection: string,
         doc: string,

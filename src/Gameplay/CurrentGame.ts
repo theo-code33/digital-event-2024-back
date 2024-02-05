@@ -4,7 +4,7 @@ import { currentMidi, currentTempo, devicePaths } from "../index";
 import {
   introLenghtMS,
   firebaseCollectionGame,
-  firebaseDocumentGame,
+  firebaseDocumentGame, firebaseCollectionLeaderboard,
 } from "../utils/const";
 import Logic from "../Logic";
 import { firebaseService } from "../index";
@@ -23,9 +23,16 @@ export default class CurrentGame {
           5,
           15,
           [31, 47, 79],
-          this
+          this,
+            1
         );
-        this.player2 = new Gameplay(devicePaths[1].path, 6, 0, [1, 2, 4], this);
+        this.player2 = new Gameplay(
+            devicePaths[1].path,
+            6,
+            0,
+            [1, 2, 4],
+            this,
+            2);
 
         this.player1.init();
         this.player2.init();
@@ -35,13 +42,19 @@ export default class CurrentGame {
       }
 
       firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-        winnerIs: "",
+         winnerIs: "",
       });
 
       this.player1.endGame();
       this.player2.endGame();
 
-      new Logic(currentTempo.getCurrentMusic(), "cc", 7, 90).setAllVolumes();
+      new Logic(currentTempo.getCurrentMusic(), "cc", 4, 0).sendMidi();
+      new Logic(currentTempo.getCurrentMusic(), "cc", 5, 0).sendMidi();
+      new Logic(currentTempo.getCurrentMusic(), "cc", 6, 0).sendMidi();
+      new Logic(currentTempo.getCurrentMusic(), "cc", 7, 0).sendMidi();
+      new Logic(currentTempo.getCurrentMusic(), "cc", 8, 0).sendMidi();
+      new Logic(currentTempo.getCurrentMusic(), "cc", 9, 0).sendMidi();
+      new Logic(currentTempo.getCurrentMusic(), "cc", 10, 0).sendMidi();
       new Logic(currentTempo.getCurrentMusic(), "cc", 7, 90).sendMidi();
 
       currentTempo.setCurrentMesure(-1);
@@ -54,13 +67,19 @@ export default class CurrentGame {
     new GameplayEvent(this.player1.level, this.player2.level).sendEvent();
   }
 
-  stopGame() {
+  stopGame(player: number, scoreplayer: number) {
     const winner =
       this.player1.level > this.player2.level ? "player1" : "player2";
     firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
       winnerIs: winner,
       chronoStarted: false,
     });
+    firebaseService.createDoc(firebaseCollectionLeaderboard, {
+        number: {
+            name: "",
+            score: scoreplayer,
+        },
+    })
     this.player1.level = 0;
     this.player2.level = 0;
 

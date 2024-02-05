@@ -4,15 +4,16 @@ import { firebaseService } from "../index";
 import { firebaseCollectionGame, firebaseDocumentGame } from "../utils/const";
 
 export default class GameplayEvent {
-  private readonly score1: number;
-  private readonly score2: number;
+  public readonly score1: number;
+  public readonly score2: number;
   constructor(score1: number, score2: number) {
     this.score1 = score1;
     this.score2 = score2;
   }
   public sendEvent(): void {
     firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-      player1Domination: this.score1,
+      "scorePlayer1": this.score1,
+      "scorePlayer2": this.score2,
     });
     console.log('send event method called')
     switch (this.score1 - this.score2) {

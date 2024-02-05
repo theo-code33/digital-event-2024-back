@@ -17,7 +17,8 @@ export class Gameplay {
     deviceSlot: number,
     initialBtnValue: number,
     possibilityPlayer: number[],
-    currentGame: CurrentGame
+    currentGame: CurrentGame,
+    public playerId: number
   ) {
     this.hidiDevice = new HID.HID(path);
     this.deviceSlot = deviceSlot;
@@ -25,6 +26,7 @@ export class Gameplay {
     this.possibilityPlayer = possibilityPlayer;
     this.combinationPlayer = this.getInitialCombination();
     this.currentGame = currentGame;
+    this.playerId = playerId;
   }
 
   startGame(): void {
@@ -82,7 +84,7 @@ export class Gameplay {
 
   endGame(): void {
     setTimeout(() => {
-      this.currentGame.stopGame();
+      this.currentGame.stopGame(this.playerId, this.level);
     }, gameLength);
   }
 
