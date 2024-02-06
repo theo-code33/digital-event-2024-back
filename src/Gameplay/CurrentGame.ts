@@ -136,7 +136,7 @@ export default class CurrentGame {
     this.player1.gameArray = [];
     this.player2.gameArray = [];
 
-    currentTempo.setCurrentMusic(currentTempo.getCurrentMusic() + 1);
+    // currentTempo.setCurrentMusic(currentTempo.getCurrentMusic() + 1);
 
     currentTempo.increaseCurrentMesure(true);
 
