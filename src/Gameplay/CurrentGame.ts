@@ -6,14 +6,22 @@ import {
   firebaseCollectionGame,
   firebaseDocumentGame,
   firebaseCollectionLeaderboard,
+  gameLength,
 } from "../utils/const";
 import Logic from "../Logic";
 import { firebaseService } from "../index";
 export default class CurrentGame {
   public player1: any;
   public player2: any;
+  private timeoutId: NodeJS.Timeout | undefined = undefined;
 
   startGame() {
+    firebaseService.updateDoc(`gameArray1`, "Debr9y1xeHlMyQO5AXoa", {
+      gameArray: [],
+    });
+    firebaseService.updateDoc(`gameArray2`, "gAYyJMbT6QP2djw3PXks", {
+      gameArray: [],
+    });
     firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
       chronoStarted: true,
     });
@@ -46,10 +54,19 @@ export default class CurrentGame {
 
       firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
         winnerIs: "",
+        status: "inGame",
+        player1error: false,
+        player2error: false,
+        scorePlayer1: 0,
+        scorePlayer2: 0,
       });
 
-      this.player1.endGame();
-      this.player2.endGame();
+      firebaseService.updateDoc(`player1`, "UtKKY4MiDPxQgfzOZLnH", {
+        combination: this.player1.combinationPlayer,
+      });
+      firebaseService.updateDoc(`player2`, "wp52souKXkyVkbJHA7M4", {
+        combination: this.player2.combinationPlayer,
+      });
 
       new Logic(currentTempo.getCurrentMusic(), "cc", 4, 0).sendMidi();
       new Logic(currentTempo.getCurrentMusic(), "cc", 5, 0).sendMidi();
@@ -61,6 +78,10 @@ export default class CurrentGame {
       new Logic(currentTempo.getCurrentMusic(), "cc", 7, 90).sendMidi();
       currentTempo.setCurrentMesure(-1);
 
+      this.timeoutId = setTimeout(() => {
+        this.stopGame();
+      }, gameLength);
+
       console.log("Game started");
     }, introLenghtMS);
   }
@@ -69,19 +90,31 @@ export default class CurrentGame {
     new GameplayEvent(this.player1.level, this.player2.level).sendEvent();
   }
 
-  stopGame(player: number, scoreplayer: number) {
+  stopGame() {
+    currentMidi.networkOutput.send("cc", {
+      controller: 4,
+      value: 116,
+      channel: 0,
+    });
+    clearTimeout(this.timeoutId);
     const winner =
       this.player1.level > this.player2.level ? "player1" : "player2";
     firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
       winnerIs: winner,
       chronoStarted: false,
+      status: "endGame",
     });
-    firebaseService.createDoc(firebaseCollectionLeaderboard, {
-      number: {
-        name: "",
-        score: scoreplayer,
-      },
-    });
+    setTimeout(() => {
+      firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+        status: "before",
+      });
+    }, 10000);
+    // firebaseService.createDoc(firebaseCollectionLeaderboard, {
+    //   number: {
+    //     name: "",
+    //     score: scoreplayer,
+    //   },
+    // })
     this.player1.level = 0;
     this.player2.level = 0;
 
