@@ -40,6 +40,7 @@ export class Gameplay {
     console.log(this.combinationPlayer, "this :", this);
     const documentId = this.playerId === 1 ? "UtKKY4MiDPxQgfzOZLnH" : "wp52souKXkyVkbJHA7M4";
     const gameArrayDoc = this.playerId === 1 ? "Debr9y1xeHlMyQO5AXoa" : "gAYyJMbT6QP2djw3PXks";
+
     this.hidiDevice.on("data", (data: number[]) => {
       const inputArray = Array.from(data);
       if (inputArray[this.deviceSlot] != this.initialBtnValue && !this.isClicking) {
@@ -125,10 +126,13 @@ export class Gameplay {
               player2error: false
             })
           }
-          const newPossibility =
-            this.possibilityPlayer[
-              Math.floor(Math.random() * this.possibilityPlayer.length)
-            ];
+          const lastTwoNumbers = this.possibilityPlayer.slice(-2);
+          let newPossibility;
+          do {
+            newPossibility = this.possibilityPlayer[
+                Math.floor(Math.random() * this.possibilityPlayer.length)
+                ];
+          } while (lastTwoNumbers.includes(newPossibility));
           this.combinationPlayer.push(newPossibility);
           this.gameArray.length = 0;
           return true;
