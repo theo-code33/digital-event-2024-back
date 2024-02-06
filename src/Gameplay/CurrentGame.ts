@@ -1,10 +1,11 @@
 import { Gameplay } from "./Gameplay";
 import GameplayEvent from "./GameplayEvent";
-import { currentMidi, currentTempo, devicePaths } from "../index";
+import { MadMapper, currentMidi, currentTempo, devicePaths } from "../index";
 import {
   introLenghtMS,
   firebaseCollectionGame,
-  firebaseDocumentGame, firebaseCollectionLeaderboard,
+  firebaseDocumentGame,
+  firebaseCollectionLeaderboard,
 } from "../utils/const";
 import Logic from "../Logic";
 import { firebaseService } from "../index";
@@ -16,6 +17,7 @@ export default class CurrentGame {
     firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
       chronoStarted: true,
     });
+    new MadMapper(13, "cc", 20, 127).sendMidi();
     setTimeout(() => {
       if (this.player1 === undefined && this.player2 === undefined) {
         this.player1 = new Gameplay(
@@ -24,15 +26,16 @@ export default class CurrentGame {
           15,
           [31, 47, 79],
           this,
-            1
+          1
         );
         this.player2 = new Gameplay(
-            devicePaths[1].path,
-            6,
-            0,
-            [1, 2, 4],
-            this,
-            2);
+          devicePaths[1].path,
+          6,
+          0,
+          [1, 2, 4],
+          this,
+          2
+        );
 
         this.player1.init();
         this.player2.init();
@@ -42,7 +45,7 @@ export default class CurrentGame {
       }
 
       firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-         winnerIs: "",
+        winnerIs: "",
       });
 
       this.player1.endGame();
@@ -56,7 +59,6 @@ export default class CurrentGame {
       new Logic(currentTempo.getCurrentMusic(), "cc", 9, 0).sendMidi();
       new Logic(currentTempo.getCurrentMusic(), "cc", 10, 0).sendMidi();
       new Logic(currentTempo.getCurrentMusic(), "cc", 7, 90).sendMidi();
-
       currentTempo.setCurrentMesure(-1);
 
       console.log("Game started");
@@ -75,11 +77,11 @@ export default class CurrentGame {
       chronoStarted: false,
     });
     firebaseService.createDoc(firebaseCollectionLeaderboard, {
-        number: {
-            name: "",
-            score: scoreplayer,
-        },
-    })
+      number: {
+        name: "",
+        score: scoreplayer,
+      },
+    });
     this.player1.level = 0;
     this.player2.level = 0;
 
@@ -94,7 +96,7 @@ export default class CurrentGame {
     currentTempo.increaseCurrentMesure(true);
 
     currentTempo.setCurrentMesure(-1);
-
+    new MadMapper(13, "cc", 30, 127).sendMidi();
     console.log("Game stopped");
   }
 }

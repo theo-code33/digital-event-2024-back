@@ -1,5 +1,5 @@
 import Logic from "../Logic";
-import { currentMidi, currentTempo } from "../index";
+import { MadMapper, currentMidi, currentTempo } from "../index";
 import { firebaseService } from "../index";
 import { firebaseCollectionGame, firebaseDocumentGame } from "../utils/const";
 
@@ -12,17 +12,18 @@ export default class GameplayEvent {
   }
   public sendEvent(): void {
     firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-      "scorePlayer1": this.score1,
-      "scorePlayer2": this.score2,
+      scorePlayer1: this.score1,
+      scorePlayer2: this.score2,
     });
-    console.log('send event method called')
+    console.log("send event method called");
     switch (this.score1 - this.score2) {
       case -3:
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
-            console.log('player 1 score:', this.score1)
+            console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 4, 90).sendMidi();
+            new MadMapper(12, "cc", 30, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -31,8 +32,9 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
-            console.log('player 1 score:', this.score1)
+            console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 5, 90).sendMidi();
+            new MadMapper(12, "cc", 20, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -41,8 +43,9 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
-            console.log('player 1 score:', this.score1)
+            console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 6, 90).sendMidi();
+            new MadMapper(12, "cc", 10, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -51,8 +54,9 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
-            console.log('player 1 score:', this.score1)
+            console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 7, 90).sendMidi();
+            new MadMapper(11, "cc", 10, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -61,8 +65,9 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
-            console.log('player 1 score:', this.score1)
+            console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 8, 90).sendMidi();
+            new MadMapper(10, "cc", 10, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -71,8 +76,9 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
-            console.log('player 1 score:', this.score1)
+            console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 9, 90).sendMidi();
+            new MadMapper(10, "cc", 20, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -81,8 +87,9 @@ export default class GameplayEvent {
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
-            console.log('player 1 score:', this.score1)
+            console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 10, 90).sendMidi();
+            new MadMapper(10, "cc", 30, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
