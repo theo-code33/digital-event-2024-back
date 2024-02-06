@@ -14,7 +14,7 @@ export class Gameplay {
   public combinationPlayer: number[];
   public currentGame: CurrentGame;
   public playerId: number;
-  public timeoutId: NodeJS.Timeout | null = null;
+  private isClicking: boolean = false;
   constructor(
     path: string,
     deviceSlot: number,
@@ -39,15 +39,19 @@ export class Gameplay {
   public init() {
     console.log(this.combinationPlayer, "this :", this);
     const documentId = this.playerId === 1 ? "UtKKY4MiDPxQgfzOZLnH" : "wp52souKXkyVkbJHA7M4";
-    let isClicking = false;
+    const gameArrayDoc = this.playerId === 1 ? "Debr9y1xeHlMyQO5AXoa" : "gAYyJMbT6QP2djw3PXks";
     this.hidiDevice.on("data", (data: number[]) => {
       const inputArray = Array.from(data);
-      if (inputArray[this.deviceSlot] != this.initialBtnValue && !isClicking) {
+      if (inputArray[this.deviceSlot] != this.initialBtnValue && !this.isClicking) {
         console.log(
           inputArray[this.deviceSlot],
           this.combinationPlayer,
           this.level
         );
+        firebaseService.updateDoc(`gameArray${this.playerId}`, gameArrayDoc, {
+          gameArray: this.gameArray
+        })
+        console.log(`gameArray${this.playerId}`, gameArrayDoc)
         this.gameArray.push(inputArray[this.deviceSlot]);
         const isCombinationTrue: boolean | undefined =
           this.checkCombinationPlayer();
@@ -58,12 +62,12 @@ export class Gameplay {
             combination: this.combinationPlayer
           })
         }
-        isClicking = true;
+        this.isClicking = true;
       } else if (
         inputArray[this.deviceSlot] == this.initialBtnValue &&
-        isClicking
+        this.isClicking
       ) {
-        isClicking = false;
+        this.isClicking = false;
       }
     });
     this.hidiDevice.on("error", (error: Error) => {
@@ -75,14 +79,28 @@ export class Gameplay {
     for (let i: number = 0; i < this.gameArray.length; i++) {
       if (this.gameArray[i] != this.combinationPlayer[i]) {
         this.gameArray.length = 0;
+        this.isClicking = true;
+        setTimeout(() => {
+          this.isClicking = false;
+        }, this.combinationPlayer.length * 500);
         if (this.playerId === 1) {
           firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
             player1error: true
           })
+          setTimeout(() => {
+            firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+              player1error: false
+            })
+          }, 1000);
         } else if (this.playerId === 2) {
             firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
                 player2error: true
             })
+          setTimeout(() => {
+            firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+              player2error: false
+            })
+          }, 1000);
         }
         console.log("error !");
         return false;
@@ -118,13 +136,6 @@ export class Gameplay {
       }
     }
   }
-
-  endGame(): void {
-    this.timeoutId = setTimeout(() => {
-      this.currentGame.stopGame(this.playerId, this.level);
-    }, gameLength);
-  }
-
   getInitialCombination(): number[] {
     return initialCombination(this.possibilityPlayer);
   }

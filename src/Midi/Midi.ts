@@ -7,6 +7,7 @@ export class Midi extends Tempo {
     public networkInput: easymidi.Input;
     public logicInput: easymidi.Input;
     private akai: easymidi.Input
+    public networkOutput: easymidi.Output = new easymidi.Output(network, false);
   constructor(public midi: string, bpm: number, loopLength: number) {
     super(bpm);
     this.networkInput = new easymidi.Input(network, false);
@@ -44,12 +45,17 @@ export class Midi extends Tempo {
         }, introLenghtMS);
       }
       if (msg.note === 40 && msg.channel == 0) {
-        currentGame.player1.currentGame.stopGame(currentGame.player1.playerId, currentGame.player1.level);
-        currentGame.player2.endGame(currentGame.player2.playerId, currentGame.player2.level);
+        currentGame.stopGame();
         firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
           status: "before",
         });
       }
+      if (msg.note === 42 && msg.channel == 0) {
+        this.networkOutput.send("cc", {
+          controller: 4,
+          value: 116,
+          channel: 0
+        })}
     });
     this.logicInput.on("noteon", (msg) => {
         if (msg.note === 37 && msg.channel == 0 && msg.velocity === 112) {

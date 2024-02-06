@@ -2,17 +2,24 @@ import { Gameplay } from "./Gameplay";
 import GameplayEvent from "./GameplayEvent";
 import { currentMidi, currentTempo, devicePaths } from "../index";
 import {
-  introLenghtMS,
-  firebaseCollectionGame,
-  firebaseDocumentGame, firebaseCollectionLeaderboard,
+    introLenghtMS,
+    firebaseCollectionGame,
+    firebaseDocumentGame, firebaseCollectionLeaderboard, gameLength,
 } from "../utils/const";
 import Logic from "../Logic";
 import { firebaseService } from "../index";
 export default class CurrentGame {
   public player1: any;
   public player2: any;
+  private timeoutId: NodeJS.Timeout | undefined = undefined;
 
   startGame() {
+      firebaseService.updateDoc(`gameArray1`, "Debr9y1xeHlMyQO5AXoa", {
+          gameArray: []
+      })
+      firebaseService.updateDoc(`gameArray2`, "gAYyJMbT6QP2djw3PXks", {
+          gameArray: []
+      })
     firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
       chronoStarted: true,
     });
@@ -57,9 +64,6 @@ export default class CurrentGame {
         combination: this.player2.combinationPlayer
       })
 
-      this.player1.endGame();
-      this.player2.endGame();
-
       new Logic(currentTempo.getCurrentMusic(), "cc", 4, 0).sendMidi();
       new Logic(currentTempo.getCurrentMusic(), "cc", 5, 0).sendMidi();
       new Logic(currentTempo.getCurrentMusic(), "cc", 6, 0).sendMidi();
@@ -71,6 +75,10 @@ export default class CurrentGame {
 
       currentTempo.setCurrentMesure(-1);
 
+        this.timeoutId = setTimeout(() => {
+            this.stopGame();
+        }, gameLength);
+
       console.log("Game started");
     }, introLenghtMS);
   }
@@ -79,11 +87,13 @@ export default class CurrentGame {
     new GameplayEvent(this.player1.level, this.player2.level).sendEvent();
   }
 
-  stopGame(player: number, scoreplayer: number) {
-      if (this.player1.timeoutId !== null) {
-        clearTimeout(this.player1.timeoutId);
-        this.player1.timeoutId = null;
-      }
+  stopGame() {
+      currentMidi.networkOutput.send("cc", {
+          controller: 4,
+          value: 116,
+          channel: 0
+      })
+      clearTimeout(this.timeoutId);
       const winner =
           this.player1.level > this.player2.level ? "player1" : "player2";
       firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
@@ -96,12 +106,12 @@ export default class CurrentGame {
           status: "before",
         });
       }, 10000);
-      firebaseService.createDoc(firebaseCollectionLeaderboard, {
-        number: {
-          name: "",
-          score: scoreplayer,
-        },
-      })
+      // firebaseService.createDoc(firebaseCollectionLeaderboard, {
+      //   number: {
+      //     name: "",
+      //     score: scoreplayer,
+      //   },
+      // })
       this.player1.level = 0;
       this.player2.level = 0;
 
@@ -111,7 +121,7 @@ export default class CurrentGame {
       this.player1.gameArray = [];
       this.player2.gameArray = [];
 
-      // currentTempo.setCurrentMusic(currentTempo.getCurrentMusic() + 1);
+      currentTempo.setCurrentMusic(currentTempo.getCurrentMusic() + 1);
 
       currentTempo.increaseCurrentMesure(true);
 
