@@ -1,7 +1,8 @@
 import * as HID from "node-hid";
 import initialCombination from "./utils/InitialCombination";
 import CurrentGame from "./CurrentGame";
-import { gameLength } from "../utils/const";
+import {firebaseCollectionGame, firebaseDocumentGame, gameLength} from "../utils/const";
+import {firebaseService} from "../index";
 
 export class Gameplay {
   private hidiDevice: any;
@@ -12,13 +13,15 @@ export class Gameplay {
   public level: number = 1;
   public combinationPlayer: number[];
   public currentGame: CurrentGame;
+  public playerId: number;
+  public timeoutId: NodeJS.Timeout | null = null;
   constructor(
     path: string,
     deviceSlot: number,
     initialBtnValue: number,
     possibilityPlayer: number[],
     currentGame: CurrentGame,
-    public playerId: number
+    playerId: number
   ) {
     this.hidiDevice = new HID.HID(path);
     this.deviceSlot = deviceSlot;
@@ -34,7 +37,8 @@ export class Gameplay {
   }
 
   public init() {
-    console.log(this.combinationPlayer);
+    console.log(this.combinationPlayer, "this :", this);
+    const documentId = this.playerId === 1 ? "UtKKY4MiDPxQgfzOZLnH" : "wp52souKXkyVkbJHA7M4";
     let isClicking = false;
     this.hidiDevice.on("data", (data: number[]) => {
       const inputArray = Array.from(data);
@@ -47,7 +51,13 @@ export class Gameplay {
         this.gameArray.push(inputArray[this.deviceSlot]);
         const isCombinationTrue: boolean | undefined =
           this.checkCombinationPlayer();
-        if (isCombinationTrue) this.level++ && this.currentGame.checkScore();
+        if (isCombinationTrue) {
+          this.level++;
+          this.currentGame.checkScore();
+          firebaseService.updateDoc(`player${this.playerId}`, documentId, {
+            combination: this.combinationPlayer
+          })
+        }
         isClicking = true;
       } else if (
         inputArray[this.deviceSlot] == this.initialBtnValue &&
@@ -65,11 +75,38 @@ export class Gameplay {
     for (let i: number = 0; i < this.gameArray.length; i++) {
       if (this.gameArray[i] != this.combinationPlayer[i]) {
         this.gameArray.length = 0;
+        if (this.playerId === 1) {
+          firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+            player1error: true
+          })
+        } else if (this.playerId === 2) {
+            firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+                player2error: true
+            })
+        }
         console.log("error !");
         return false;
       } else {
+        if (this.playerId === 1) {
+          firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+            player1error: false
+          })
+        } else if (this.playerId === 2) {
+          firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+            player2error: false
+          })
+        }
         if (i === this.combinationPlayer.length - 1) {
           console.log("success !");
+          if (this.playerId === 1) {
+            firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+              player1error: false
+            })
+          } else if (this.playerId === 2) {
+            firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+              player2error: false
+            })
+          }
           const newPossibility =
             this.possibilityPlayer[
               Math.floor(Math.random() * this.possibilityPlayer.length)
@@ -83,7 +120,7 @@ export class Gameplay {
   }
 
   endGame(): void {
-    setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
       this.currentGame.stopGame(this.playerId, this.level);
     }, gameLength);
   }

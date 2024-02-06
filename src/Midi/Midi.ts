@@ -1,7 +1,7 @@
 import Tempo from "../Tempo";
 import easymidi from "easymidi";
-import {introLenghtMS, logicProInput, network} from "../utils/const";
-import {currentGame, currentMidi, currentTempo} from "../index";
+import {firebaseCollectionGame, firebaseDocumentGame, introLenghtMS, logicProInput, network} from "../utils/const";
+import {currentGame, currentMidi, currentTempo, firebaseService} from "../index";
 
 export class Midi extends Tempo {
     public networkInput: easymidi.Input;
@@ -42,6 +42,13 @@ export class Midi extends Tempo {
             isAlreadyFired: false
           });
         }, introLenghtMS);
+      }
+      if (msg.note === 40 && msg.channel == 0) {
+        currentGame.player1.currentGame.stopGame(currentGame.player1.playerId, currentGame.player1.level);
+        currentGame.player2.endGame(currentGame.player2.playerId, currentGame.player2.level);
+        firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+          status: "before",
+        });
       }
     });
     this.logicInput.on("noteon", (msg) => {

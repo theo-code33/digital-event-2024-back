@@ -25,7 +25,7 @@ export default class CurrentGame {
           [31, 47, 79],
           this,
             1
-        );
+        )
         this.player2 = new Gameplay(
             devicePaths[1].path,
             6,
@@ -43,7 +43,19 @@ export default class CurrentGame {
 
       firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
          winnerIs: "",
+         "status": "inGame",
+         player1error: false,
+         player2error: false,
+         scorePlayer1: 0,
+         scorePlayer2: 0,
       });
+
+      firebaseService.updateDoc(`player1`, "UtKKY4MiDPxQgfzOZLnH", {
+        combination: this.player1.combinationPlayer
+      })
+      firebaseService.updateDoc(`player2`, "wp52souKXkyVkbJHA7M4", {
+        combination: this.player2.combinationPlayer
+      })
 
       this.player1.endGame();
       this.player2.endGame();
@@ -68,33 +80,43 @@ export default class CurrentGame {
   }
 
   stopGame(player: number, scoreplayer: number) {
-    const winner =
-      this.player1.level > this.player2.level ? "player1" : "player2";
-    firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-      winnerIs: winner,
-      chronoStarted: false,
-    });
-    firebaseService.createDoc(firebaseCollectionLeaderboard, {
+      if (this.player1.timeoutId !== null) {
+        clearTimeout(this.player1.timeoutId);
+        this.player1.timeoutId = null;
+      }
+      const winner =
+          this.player1.level > this.player2.level ? "player1" : "player2";
+      firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+        winnerIs: winner,
+        chronoStarted: false,
+        status: "endGame",
+      });
+      setTimeout(() => {
+        firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+          status: "before",
+        });
+      }, 10000);
+      firebaseService.createDoc(firebaseCollectionLeaderboard, {
         number: {
-            name: "",
-            score: scoreplayer,
+          name: "",
+          score: scoreplayer,
         },
-    })
-    this.player1.level = 0;
-    this.player2.level = 0;
+      })
+      this.player1.level = 0;
+      this.player2.level = 0;
 
-    this.player1.combinationPlayer = [];
-    this.player2.combinationPlayer = [];
+      this.player1.combinationPlayer = [];
+      this.player2.combinationPlayer = [];
 
-    this.player1.gameArray = [];
-    this.player2.gameArray = [];
+      this.player1.gameArray = [];
+      this.player2.gameArray = [];
 
-    currentTempo.setCurrentMusic(currentTempo.getCurrentMusic() + 1);
+      // currentTempo.setCurrentMusic(currentTempo.getCurrentMusic() + 1);
 
-    currentTempo.increaseCurrentMesure(true);
+      currentTempo.increaseCurrentMesure(true);
 
-    currentTempo.setCurrentMesure(-1);
+      currentTempo.setCurrentMesure(-1);
 
-    console.log("Game stopped");
-  }
+      console.log("Game stopped");
+    }
 }
