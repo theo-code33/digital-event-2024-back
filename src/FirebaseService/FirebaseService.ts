@@ -49,6 +49,11 @@ export class FirebaseService {
         doc: string,
         data: any
     ): Promise<void> {
-        await this.db.collection(collection).doc(doc).update(data);
+        console.log("updateDoc", collection, doc, data);
+        try {
+            await this.db.collection(collection).doc(doc).update(data);
+        } catch (error) {
+            console.error("Error updating document: ", error);
+        }
     }
 }

@@ -15,6 +15,7 @@ export class Gameplay {
   public currentGame: CurrentGame;
   public playerId: number;
   private isClicking: boolean = false;
+  private isTimeout: boolean = false;
   constructor(
     path: string,
     deviceSlot: number,
@@ -24,6 +25,7 @@ export class Gameplay {
     playerId: number
   ) {
     this.hidiDevice = new HID.HID(path);
+    console.log("this.hidiDevice", this.hidiDevice)
     this.deviceSlot = deviceSlot;
     this.initialBtnValue = initialBtnValue;
     this.possibilityPlayer = possibilityPlayer;
@@ -43,15 +45,23 @@ export class Gameplay {
 
     this.hidiDevice.on("data", (data: number[]) => {
       const inputArray = Array.from(data);
-      if (inputArray[this.deviceSlot] != this.initialBtnValue && !this.isClicking) {
+      if (inputArray[this.deviceSlot] != this.initialBtnValue && !this.isClicking &&!this.isTimeout) {
         console.log(
           inputArray[this.deviceSlot],
           this.combinationPlayer,
-          this.level
+          this.level,
+            "isTimeout 3 :", this.isTimeout,
         );
-        firebaseService.updateDoc(`gameArray${this.playerId}`, gameArrayDoc, {
-          gameArray: this.gameArray
-        })
+        if (this.gameArray.length === 0) {
+            firebaseService.updateDoc(`gameArray${this.playerId}`, gameArrayDoc, {
+              gameArray: this.gameArray
+            })
+        } else {
+          firebaseService.updateDoc(`gameArray${this.playerId}`, gameArrayDoc, {
+            gameArray: this.gameArray
+          })
+        }
+
         console.log(`gameArray${this.playerId}`, gameArrayDoc)
         this.gameArray.push(inputArray[this.deviceSlot]);
         const isCombinationTrue: boolean | undefined =
@@ -80,10 +90,10 @@ export class Gameplay {
     for (let i: number = 0; i < this.gameArray.length; i++) {
       if (this.gameArray[i] != this.combinationPlayer[i]) {
         this.gameArray.length = 0;
-        this.isClicking = true;
+        this.isTimeout = true;
         setTimeout(() => {
-          this.isClicking = false;
-        }, this.combinationPlayer.length * 500);
+          this.isTimeout = false;
+        }, this.combinationPlayer.length * 800);
         if (this.playerId === 1) {
           firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
             player1error: true
@@ -119,20 +129,42 @@ export class Gameplay {
           console.log("success !");
           if (this.playerId === 1) {
             firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-              player1error: false
+              player1error: false,
+              player1success: true
             })
+            setTimeout(() => {
+              firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+                player1success: false
+              })
+            }, 1000);
           } else if (this.playerId === 2) {
             firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-              player2error: false
+              player2error: false,
+              player2success: true
             })
+            setTimeout(() => {
+              firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
+                player2success: false
+              })
+            }, 1000);
           }
-          const lastTwoNumbers = this.possibilityPlayer.slice(-2);
-          let newPossibility;
-          do {
-            newPossibility = this.possibilityPlayer[
+          let newPossibility =
+            this.possibilityPlayer[
+              Math.floor(Math.random() * this.possibilityPlayer.length)
+            ];
+
+          while (newPossibility === this.combinationPlayer[this.combinationPlayer.length - 2]) {
+            newPossibility =
+              this.possibilityPlayer[
                 Math.floor(Math.random() * this.possibilityPlayer.length)
-                ];
-          } while (lastTwoNumbers.includes(newPossibility));
+              ];
+          }
+
+          this.isTimeout = true;
+          setTimeout(() => {
+            this.isTimeout = false;
+          }, this.combinationPlayer.length * 800);
+
           this.combinationPlayer.push(newPossibility);
           this.gameArray.length = 0;
           return true;
