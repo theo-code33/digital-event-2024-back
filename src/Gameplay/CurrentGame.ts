@@ -14,6 +14,11 @@ export default class CurrentGame {
   private timeoutId: NodeJS.Timeout | undefined = undefined;
 
   startGame() {
+      // currentMidi.networkOutput.send("cc", {
+      //     controller: 1,
+      //     value: 60,
+      //     channel: 0
+      // })
       firebaseService.updateDoc(`gameArray1`, "Debr9y1xeHlMyQO5AXoa", {
           gameArray: []
       })
@@ -88,11 +93,18 @@ export default class CurrentGame {
   }
 
   stopGame() {
-      currentMidi.networkOutput.send("cc", {
-          controller: 4,
-          value: 116,
-          channel: 0
-      })
+      // set loop to waiting music
+      // currentMidi.networkOutput.send("cc", {
+      //     controller: 4,
+      //     value: 116,
+      //     channel: 0
+      // })
+      // Set bpm to 146
+      // currentMidi.networkOutput.send("cc", {
+      //     controller: 1,
+      //     value: 73,
+      //     channel: 0
+      // })
       clearTimeout(this.timeoutId);
       const winner =
           this.player1.level > this.player2.level ? "player1" : "player2";

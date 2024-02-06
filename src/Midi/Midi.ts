@@ -51,11 +51,14 @@ export class Midi extends Tempo {
         });
       }
       if (msg.note === 42 && msg.channel == 0) {
-        this.networkOutput.send("cc", {
-          controller: 4,
-          value: 116,
-          channel: 0
-        })}
+        console.log()
+        // set loop to player entrance
+        // this.networkOutput.send("cc", {
+        //   controller: 4,
+        //   value: 116,
+        //   channel: 0
+        // })
+      }
     });
     this.logicInput.on("noteon", (msg) => {
         if (msg.note === 37 && msg.channel == 0 && msg.velocity === 112) {
