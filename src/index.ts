@@ -17,6 +17,10 @@ currentMidi.listenMidi();
 export const devicePaths: any = displayConnectedDevices();
 export let currentGame = new CurrentGame();
 
+// Madmapper attente
+new MadMapper(13, "cc", 30, 127).sendMidi();
+new Logic(currentTempo.getCurrentMusic(), "cc", 1, 0).sendMidi();
+
 // new Logic(1, "cc", 4, 90).sendMidi()
 // new Logic(1, "cc", 5, 90).sendMidi()
 // new Logic(1, "cc", 6, 90).sendMidi()

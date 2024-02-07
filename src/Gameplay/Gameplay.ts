@@ -61,6 +61,7 @@ export class Gameplay {
         //     "isTimeout1", this.isTimeout1,
         //     "isTimeout2", this.isTimeout2
         // );
+        console.log('player', this.playerId, 'clicked')
         if (this.gameArray.length === 0) {
             firebaseService.updateDoc(`gameArray${this.playerId}`, gameArrayDoc, {
               gameArray: this.gameArray

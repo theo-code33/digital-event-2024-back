@@ -27,7 +27,7 @@ export class Event {
             channel: this.channel,
           };
     this.output.send(this.eventType as any, payload as any);
-    // console.log(this.eventType, payload);
+    console.log(this.eventType, payload);
   }
 
   public sendMidiWithTransition(transition: number[]): void {

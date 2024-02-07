@@ -20,6 +20,7 @@ export default class CurrentGame {
       //     value: 60,
       //     channel: 0
       // })
+
       firebaseService.updateDoc(`gameArray1`, "Debr9y1xeHlMyQO5AXoa", {
           gameArray: []
       })
@@ -30,6 +31,7 @@ export default class CurrentGame {
       chronoStarted: true,
     });
     new MadMapper(13, "cc", 20, 127).sendMidi();
+    new Logic(0, "cc", 1, 0).sendMidi();
     setTimeout(() => {
       if (this.player1 === undefined && this.player2 === undefined) {
         this.player1 = new Gameplay(
@@ -86,6 +88,15 @@ export default class CurrentGame {
         this.stopGame();
       }, gameLength);
 
+      // Mapmapper égalité P1
+
+      new MadMapper(11, "cc", 10, 127).sendMidi();
+
+
+      // Phase 1
+      currentTempo.setCurrentMesure(0);
+      currentTempo.setCurrentPhase(10);
+
       console.log("Game started");
     }, introLenghtMS);
   }
@@ -107,6 +118,14 @@ export default class CurrentGame {
       //     value: 73,
       //     channel: 0
       // })
+    new MadMapper(13, "cc", 30, 127).sendMidi();
+
+    const madMapperWinningController = this.player1.level > this.player2.level ? 10 : 90;
+
+    setTimeout(() => {
+      new MadMapper(13, "cc", madMapperWinningController, 127).sendMidi();
+    }, 134);
+
       clearTimeout(this.timeoutId);
     clearTimeout(this.timeoutId);
     const winner =

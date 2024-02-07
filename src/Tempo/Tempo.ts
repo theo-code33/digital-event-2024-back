@@ -9,6 +9,7 @@ export class Tempo {
   public moduloLoops: number = 0;
   public currentChan: number = 0;
   public currentMusic: number = 1;
+  public currentPhase: number = 0;
 
   constructor(public bpm: number) {
   }
@@ -37,7 +38,15 @@ export class Tempo {
     this.currentMusic = music == 6 ? 0 : music
   }
 
-    public getCurrentMusic(): number {
-        return this.currentMusic;
-    }
+  public getCurrentMusic(): number {
+    return this.currentMusic;
+  }
+
+  public setCurrentPhase (phase: number): void {
+    this.currentPhase = phase;
+  }
+
+  public getCurrentPhase (): number {
+    return this.currentPhase;
+  }
 }

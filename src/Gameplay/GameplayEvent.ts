@@ -23,7 +23,7 @@ export default class GameplayEvent {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 4, 90).sendMidi();
-            new MadMapper(12, "cc", 30, 127).sendMidi();
+            new MadMapper(currentTempo.getCurrentPhase(), "cc", 80, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -34,7 +34,7 @@ export default class GameplayEvent {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 5, 90).sendMidi();
-            new MadMapper(12, "cc", 20, 127).sendMidi();
+            new MadMapper(currentTempo.getCurrentPhase(), "cc", 70, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -45,7 +45,7 @@ export default class GameplayEvent {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 6, 90).sendMidi();
-            new MadMapper(12, "cc", 10, 127).sendMidi();
+            new MadMapper(currentTempo.getCurrentPhase(), "cc", 60, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -56,7 +56,7 @@ export default class GameplayEvent {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 7, 90).sendMidi();
-            new MadMapper(11, "cc", 10, 127).sendMidi();
+            new MadMapper(currentTempo.getCurrentPhase(), "cc", 50, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -67,7 +67,7 @@ export default class GameplayEvent {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 8, 90).sendMidi();
-            new MadMapper(10, "cc", 10, 127).sendMidi();
+            new MadMapper(currentTempo.getCurrentPhase(), "cc", 40, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -78,7 +78,7 @@ export default class GameplayEvent {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 9, 90).sendMidi();
-            new MadMapper(10, "cc", 20, 127).sendMidi();
+            new MadMapper(currentTempo.getCurrentPhase(), "cc", 30, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
@@ -89,7 +89,7 @@ export default class GameplayEvent {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 10, 90).sendMidi();
-            new MadMapper(10, "cc", 30, 127).sendMidi();
+            new MadMapper(currentTempo.getCurrentPhase(), "cc", 20, 127).sendMidi();
           },
           isAlreadyFired: false,
         });

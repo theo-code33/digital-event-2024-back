@@ -104,6 +104,13 @@ export class Midi extends Tempo {
     this.logicInput.on("noteon", (msg) => {
       if (msg.note === 37 && msg.channel == 0 && msg.velocity === 112) {
         currentTempo.increaseCurrentMesure();
+        if (currentTempo.getCurrentMesure() === 45) {
+          // Phase 2
+          currentTempo.setCurrentPhase(11);
+        } else if (currentTempo.getCurrentMesure() === 77) {
+          // Phase 3
+          currentTempo.setCurrentPhase(12);
+        }
       }
     });
   }
