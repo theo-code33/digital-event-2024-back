@@ -35,7 +35,7 @@ export class Tempo {
   }
 
   public setCurrentMusic(music: number): void {
-    this.currentMusic = music == 6 ? 0 : music
+    this.currentMusic = music == 2 ? 1 : music
   }
 
   public getCurrentMusic(): number {
