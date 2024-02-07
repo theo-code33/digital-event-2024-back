@@ -38,7 +38,7 @@ export class Midi extends Tempo {
           msg.channel === 0 &&
           msg.note === 37
       ) {
-        console.log("gateway is shipped !");
+        // console.log("gateway is shipped !");
         callbackFunction.function();
         callbackFunction.isAlreadyFired = true;
       }

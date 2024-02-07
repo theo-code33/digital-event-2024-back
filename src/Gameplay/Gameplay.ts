@@ -30,7 +30,6 @@ export class Gameplay {
     playerId: number
   ) {
     this.hidiDevice = new HID.HID(path);
-    console.log("this.hidiDevice", this.hidiDevice)
     this.deviceSlot = deviceSlot;
     this.initialBtnValue = initialBtnValue;
     this.possibilityPlayer = possibilityPlayer;
@@ -44,7 +43,7 @@ export class Gameplay {
   }
 
   public init() {
-    console.log(this.combinationPlayer, "this :", this);
+    // console.log(this.combinationPlayer, "this :", this);
     const documentId = this.playerId === 1 ? "UtKKY4MiDPxQgfzOZLnH" : "wp52souKXkyVkbJHA7M4";
     const gameArrayDoc = this.playerId === 1 ? "Debr9y1xeHlMyQO5AXoa" : "gAYyJMbT6QP2djw3PXks";
 
@@ -55,13 +54,13 @@ export class Gameplay {
           this.isClicking === false &&
           this.isTimeout1 === false &&
           this.isTimeout2 === false) {
-        console.log(
-          inputArray[this.deviceSlot],
-          this.combinationPlayer,
-          this.level,
-            "isTimeout1", this.isTimeout1,
-            "isTimeout2", this.isTimeout2
-        );
+        // console.log(
+        //   inputArray[this.deviceSlot],
+        //   this.combinationPlayer,
+        //   this.level,
+        //     "isTimeout1", this.isTimeout1,
+        //     "isTimeout2", this.isTimeout2
+        // );
         if (this.gameArray.length === 0) {
             firebaseService.updateDoc(`gameArray${this.playerId}`, gameArrayDoc, {
               gameArray: this.gameArray
@@ -72,7 +71,7 @@ export class Gameplay {
           })
         }
 
-        console.log(`gameArray${this.playerId}`, gameArrayDoc)
+        // console.log(`gameArray${this.playerId}`, gameArrayDoc)
         this.gameArray.push(inputArray[this.deviceSlot]);
         const isCombinationTrue: boolean | undefined =
           this.checkCombinationPlayer();
@@ -101,11 +100,11 @@ export class Gameplay {
       if (this.gameArray[i] != this.combinationPlayer[i]) {
         this.gameArray.length = 0;
         this.isTimeout1 = true;
-        console.log("error timeout1 started !");
+        // console.log("error timeout1 started !");
         this.isTimeout1Id = setTimeout(() => {
           this.isTimeout1 = false;
           clearTimeout(this.isTimeout1Id)
-          console.log("error timeout1 cleared !", this.combinationPlayer.length);
+          // console.log("error timeout1 cleared !", this.combinationPlayer.length);
         }, (this.combinationPlayer.length + 2) * 800);
         if (this.playerId === 1) {
           firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
@@ -128,7 +127,7 @@ export class Gameplay {
             clearTimeout(this.isErrorTimeoutId)
           }, 1000);
         }
-        console.log("error !");
+        // console.log("error !");
         return false;
       } else {
 
@@ -144,7 +143,7 @@ export class Gameplay {
         }
         if (i === this.combinationPlayer.length - 1) {
           this.isTimeout2 = true;
-          console.log("success !");
+          // console.log("success !");
           if (this.playerId === 1) {
             firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
               player1error: false,
@@ -184,7 +183,7 @@ export class Gameplay {
           this.isTimeout2Id = setTimeout(() => {
             this.isTimeout2 = false;
             clearTimeout(this.isTimeout2Id)
-            console.log("error timeout2 cleared !");
+            // console.log("error timeout2 cleared !");
           }, this.combinationPlayer.length * 800);
 
           return true;
