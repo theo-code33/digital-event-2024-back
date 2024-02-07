@@ -117,6 +117,14 @@ export default class CurrentGame {
       //     value: 73,
       //     channel: 0
       // })
+    new Logic(currentTempo.getCurrentMusic(), "cc", 4, 0).sendMidi();
+    new Logic(currentTempo.getCurrentMusic(), "cc", 5, 0).sendMidi();
+    new Logic(currentTempo.getCurrentMusic(), "cc", 6, 0).sendMidi();
+    new Logic(currentTempo.getCurrentMusic(), "cc", 7, 0).sendMidi();
+    new Logic(currentTempo.getCurrentMusic(), "cc", 8, 0).sendMidi();
+    new Logic(currentTempo.getCurrentMusic(), "cc", 9, 0).sendMidi();
+    new Logic(currentTempo.getCurrentMusic(), "cc", 10, 0).sendMidi();
+    
     new MadMapper(13, "cc", 30, 127).sendMidi();
 
     const madMapperWinningController = this.player1.level > this.player2.level ? 10 : 90;
