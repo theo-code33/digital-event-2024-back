@@ -131,23 +131,11 @@ export class Gameplay {
         // console.log("error !");
         return false;
       } else {
-
-        if (this.playerId === 1) {
-
-          firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-            player1error: false
-          })
-        } else if (this.playerId === 2) {
-          firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-            player2error: false
-          })
-        }
         if (i === this.combinationPlayer.length - 1) {
           this.isTimeout2 = true;
           // console.log("success !");
           if (this.playerId === 1) {
             firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-              player1error: false,
               player1success: true
             })
             setTimeout(() => {
@@ -157,7 +145,6 @@ export class Gameplay {
             }, 1000);
           } else if (this.playerId === 2) {
             firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
-              player2error: false,
               player2success: true
             })
             setTimeout(() => {
