@@ -3,6 +3,7 @@ import initialCombination from "./utils/InitialCombination";
 import CurrentGame from "./CurrentGame";
 import {firebaseCollectionGame, firebaseDocumentGame, gameLength} from "../utils/const";
 import {firebaseService} from "../index";
+import {clearInterval, clearTimeout} from "node:timers";
 
 export class Gameplay {
   private hidiDevice: any;
@@ -15,7 +16,11 @@ export class Gameplay {
   public currentGame: CurrentGame;
   public playerId: number;
   private isClicking: boolean = false;
-  private isTimeout: boolean = false;
+  private isTimeout1: boolean = false;
+  private isTimeout2: boolean = false;
+  private isTimeout1Id: NodeJS.Timeout | undefined;
+  private isTimeout2Id: NodeJS.Timeout | undefined;
+  private isErrorTimeoutId: NodeJS.Timeout | undefined;
   constructor(
     path: string,
     deviceSlot: number,
@@ -45,11 +50,17 @@ export class Gameplay {
 
     this.hidiDevice.on("data", (data: number[]) => {
       const inputArray = Array.from(data);
-      if (inputArray[this.deviceSlot] != this.initialBtnValue && this.isClicking === false && this.isTimeout === false) {
+      if (
+          inputArray[this.deviceSlot] != this.initialBtnValue &&
+          this.isClicking === false &&
+          this.isTimeout1 === false &&
+          this.isTimeout2 === false) {
         console.log(
           inputArray[this.deviceSlot],
           this.combinationPlayer,
           this.level,
+            "isTimeout1", this.isTimeout1,
+            "isTimeout2", this.isTimeout2
         );
         if (this.gameArray.length === 0) {
             firebaseService.updateDoc(`gameArray${this.playerId}`, gameArrayDoc, {
@@ -89,27 +100,32 @@ export class Gameplay {
     for (let i: number = 0; i < this.gameArray.length; i++) {
       if (this.gameArray[i] != this.combinationPlayer[i]) {
         this.gameArray.length = 0;
-        this.isTimeout = true;
-        setTimeout(() => {
-          this.isTimeout = false;
-        }, this.combinationPlayer.length * 800);
+        this.isTimeout1 = true;
+        console.log("error timeout1 started !");
+        this.isTimeout1Id = setTimeout(() => {
+          this.isTimeout1 = false;
+          clearTimeout(this.isTimeout1Id)
+          console.log("error timeout1 cleared !", this.combinationPlayer.length);
+        }, (this.combinationPlayer.length + 2) * 800);
         if (this.playerId === 1) {
           firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
             player1error: true
           })
-          setTimeout(() => {
+          this.isErrorTimeoutId = setTimeout(() => {
             firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
               player1error: false
             })
+            clearTimeout(this.isErrorTimeoutId)
           }, 1000);
         } else if (this.playerId === 2) {
             firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
                 player2error: true
             })
-          setTimeout(() => {
+          this.isErrorTimeoutId = setTimeout(() => {
             firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
               player2error: false
             })
+            clearTimeout(this.isErrorTimeoutId)
           }, 1000);
         }
         console.log("error !");
@@ -127,11 +143,8 @@ export class Gameplay {
           })
         }
         if (i === this.combinationPlayer.length - 1) {
+          this.isTimeout2 = true;
           console.log("success !");
-          this.isTimeout = true;
-          setTimeout(() => {
-            this.isTimeout = false;
-          }, this.combinationPlayer.length * 800);
           if (this.playerId === 1) {
             firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
               player1error: false,
@@ -167,6 +180,13 @@ export class Gameplay {
 
           this.combinationPlayer.push(newPossibility);
           this.gameArray.length = 0;
+          console.log("error timeout2 started !");
+          this.isTimeout2Id = setTimeout(() => {
+            this.isTimeout2 = false;
+            clearTimeout(this.isTimeout2Id)
+            console.log("error timeout2 cleared !");
+          }, this.combinationPlayer.length * 800);
+
           return true;
         }
       }
