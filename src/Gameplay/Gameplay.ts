@@ -45,12 +45,11 @@ export class Gameplay {
 
     this.hidiDevice.on("data", (data: number[]) => {
       const inputArray = Array.from(data);
-      if (inputArray[this.deviceSlot] != this.initialBtnValue && !this.isClicking &&!this.isTimeout) {
+      if (inputArray[this.deviceSlot] != this.initialBtnValue && this.isClicking === false && this.isTimeout === false) {
         console.log(
           inputArray[this.deviceSlot],
           this.combinationPlayer,
           this.level,
-            "isTimeout 3 :", this.isTimeout,
         );
         if (this.gameArray.length === 0) {
             firebaseService.updateDoc(`gameArray${this.playerId}`, gameArrayDoc, {
@@ -116,7 +115,9 @@ export class Gameplay {
         console.log("error !");
         return false;
       } else {
+
         if (this.playerId === 1) {
+
           firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
             player1error: false
           })
@@ -127,6 +128,10 @@ export class Gameplay {
         }
         if (i === this.combinationPlayer.length - 1) {
           console.log("success !");
+          this.isTimeout = true;
+          setTimeout(() => {
+            this.isTimeout = false;
+          }, this.combinationPlayer.length * 800);
           if (this.playerId === 1) {
             firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
               player1error: false,
@@ -159,11 +164,6 @@ export class Gameplay {
                 Math.floor(Math.random() * this.possibilityPlayer.length)
               ];
           }
-
-          this.isTimeout = true;
-          setTimeout(() => {
-            this.isTimeout = false;
-          }, this.combinationPlayer.length * 800);
 
           this.combinationPlayer.push(newPossibility);
           this.gameArray.length = 0;
