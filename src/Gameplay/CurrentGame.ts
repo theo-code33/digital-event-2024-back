@@ -89,8 +89,7 @@ export default class CurrentGame {
       }, gameLength);
 
       // Mapmapper égalité P1
-
-      new MadMapper(11, "cc", 10, 127).sendMidi();
+      new MadMapper(10, "cc", 50, 127).sendMidi();
 
 
       // Phase 1

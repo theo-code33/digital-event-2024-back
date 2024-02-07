@@ -106,10 +106,10 @@ export class Midi extends Tempo {
         currentTempo.increaseCurrentMesure();
         if (currentTempo.getCurrentMesure() === 45) {
           // Phase 2
-          currentTempo.setCurrentPhase(11);
+          currentTempo.setCurrentPhase(10);
         } else if (currentTempo.getCurrentMesure() === 77) {
           // Phase 3
-          currentTempo.setCurrentPhase(12);
+          currentTempo.setCurrentPhase(10);
         }
       }
     });

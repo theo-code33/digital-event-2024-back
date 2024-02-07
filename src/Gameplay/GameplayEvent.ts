@@ -18,78 +18,79 @@ export default class GameplayEvent {
     console.log("send event method called");
     switch (this.score1 - this.score2) {
       case -3:
+        new MadMapper(currentTempo.getCurrentPhase(), "cc", 80, 127).sendMidi();
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 4, 90).sendMidi();
-            new MadMapper(currentTempo.getCurrentPhase(), "cc", 80, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
         break;
       case -2:
+        new MadMapper(currentTempo.getCurrentPhase(), "cc", 70, 127).sendMidi();
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 5, 90).sendMidi();
-            new MadMapper(currentTempo.getCurrentPhase(), "cc", 70, 127).sendMidi();
+
           },
           isAlreadyFired: false,
         });
         break;
       case -1:
+        new MadMapper(currentTempo.getCurrentPhase(), "cc", 60, 127).sendMidi();
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 6, 90).sendMidi();
-            new MadMapper(currentTempo.getCurrentPhase(), "cc", 60, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
         break;
       case 0:
+        new MadMapper(currentTempo.getCurrentPhase(), "cc", 50, 127).sendMidi();
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 7, 90).sendMidi();
-            new MadMapper(currentTempo.getCurrentPhase(), "cc", 50, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
         break;
       case 1:
+        new MadMapper(currentTempo.getCurrentPhase(), "cc", 40, 127).sendMidi();
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 8, 90).sendMidi();
-            new MadMapper(currentTempo.getCurrentPhase(), "cc", 40, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
         break;
       case 2:
+        new MadMapper(currentTempo.getCurrentPhase(), "cc", 30, 127).sendMidi();
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 9, 90).sendMidi();
-            new MadMapper(currentTempo.getCurrentPhase(), "cc", 30, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
         break;
       case 3:
+        new MadMapper(currentTempo.getCurrentPhase(), "cc", 20, 127).sendMidi();
         currentMidi.tempoGateway({
           function: () => {
             this.resetAllVolumesToZero();
             console.log("player 1 score:", this.score1);
             new Logic(currentTempo.getCurrentMusic(), "cc", 10, 90).sendMidi();
-            new MadMapper(currentTempo.getCurrentPhase(), "cc", 20, 127).sendMidi();
           },
           isAlreadyFired: false,
         });
