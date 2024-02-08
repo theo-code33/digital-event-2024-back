@@ -124,19 +124,19 @@ export default class CurrentGame {
     new Logic(currentTempo.getCurrentMusic(), "cc", 8, 0).sendMidi();
     new Logic(currentTempo.getCurrentMusic(), "cc", 9, 0).sendMidi();
     new Logic(currentTempo.getCurrentMusic(), "cc", 10, 0).sendMidi();
-    
-    new MadMapper(13, "cc", 30, 127).sendMidi();
 
-    const madMapperWinningController = this.player1.level > this.player2.level ? 10 : 90;
+    const madMapperWinningController = this.player1.level > this.player2.level ? 10 : this.player1.level === this.player2.level ? 100 : 90;
+
+    new MadMapper(10, "cc", madMapperWinningController, 127).sendMidi();
 
     setTimeout(() => {
-      new MadMapper(13, "cc", madMapperWinningController, 127).sendMidi();
-    }, 134);
+      new MadMapper(13, "cc", 30, 127).sendMidi();
+    }, 2500);
 
       clearTimeout(this.timeoutId);
     clearTimeout(this.timeoutId);
     const winner =
-      this.player1.level > this.player2.level ? "player1" : "player2";
+      this.player1.level > this.player2.level ? "player1" :this.player1.level < this.player2.level ? "player2" : "draw";
     firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
       winnerIs: winner,
       chronoStarted: false,

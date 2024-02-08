@@ -106,7 +106,7 @@ export class Gameplay {
           this.isTimeout1 = false;
           clearTimeout(this.isTimeout1Id)
           // console.log("error timeout1 cleared !", this.combinationPlayer.length);
-        }, (this.combinationPlayer.length + 2) * 800);
+        }, this.combinationPlayer.length > 4 ? (this.combinationPlayer.length + 2) * 500 : (this.combinationPlayer.length + 2) * 800);
         if (this.playerId === 1) {
           firebaseService.updateDoc(firebaseCollectionGame, firebaseDocumentGame, {
             player1error: true
@@ -172,7 +172,7 @@ export class Gameplay {
             this.isTimeout2 = false;
             clearTimeout(this.isTimeout2Id)
             // console.log("error timeout2 cleared !");
-          }, this.combinationPlayer.length * 800);
+          }, this.combinationPlayer.length > 4 ? (this.combinationPlayer.length + 2) * 500 : (this.combinationPlayer.length + 2) * 800);
 
           return true;
         }
